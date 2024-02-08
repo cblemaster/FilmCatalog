@@ -13,8 +13,6 @@
         public bool IsFavorite { get; init; }
         public bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime UpdateDate { get; init; }
-        public DirectorViewDTO? Director { get; init; }
-        public required FormatViewDTO Format { get; init; }
         public required IEnumerable<ActorViewDTO> Actors { get; init; }
         public required IEnumerable<CategoryViewDTO> Categories { get; init; }
 

@@ -12,8 +12,6 @@
         public bool IsFavorite { get; init; }
         public bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime CreateDate { get; init; }
-        public DirectorViewDTO? Director {  get; init; }
-        public required FormatViewDTO Format {  get; init; }
 
         public (bool IsValid, string ErrorMessage) Validate()
         {
