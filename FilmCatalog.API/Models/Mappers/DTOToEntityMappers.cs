@@ -10,15 +10,15 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static Actor? MapActorUpdate(ActorUpdateDTO updateActor) => updateActor == null ? null : new() { ActorId = updateActor.ActorId, Name = updateActor.Name, Films = MapFilmViewCollection(updateActor.Films) };
 
-        public static Actor MapActorView(ActorViewDTO actor) => actor == null ? new() : new() { ActorId = actor.ActorId, Name = actor.Name, Films = MapFilmViewCollection(actor.Films) };
+        public static Actor MapActorView(ActorViewForFilmDTO actor) => actor == null ? new() : new() { ActorId = actor.ActorId, Name = actor.Name };
 
-        public static ImmutableList<Actor> MapActorViewCollection(IEnumerable<ActorViewDTO> actors)
+        public static ImmutableList<Actor> MapActorViewCollection(IEnumerable<ActorViewForFilmDTO> actors)
         {
             ImmutableList<Actor> entityList = [];
 
             if (actors == null) { return entityList; }
 
-            foreach (ActorViewDTO actor in actors)
+            foreach (ActorViewForFilmDTO actor in actors)
             {
                 if (MapActorView(actor) is Actor mappedActor)
                 {
@@ -32,15 +32,15 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static Category? MapCategoryUpdate(CategoryUpdateDTO updateCategory) => updateCategory == null ? null : new() { CategoryId = updateCategory.CategoryId, CategoryName = updateCategory.CategoryName, Films = MapFilmViewCollection(updateCategory.Films) };
 
-        public static Category MapCategoryView(CategoryViewDTO category) => category == null ? new() : new() { CategoryId = category.CategoryId, CategoryName = category.CategoryName, Films = MapFilmViewCollection(category.Films) };
+        public static Category MapCategoryView(CategoryViewForFilmDTO category) => category == null ? new() : new() { CategoryId = category.CategoryId, CategoryName = category.CategoryName };
 
-        public static ImmutableList<Category> MapCategoryViewCollection(IEnumerable<CategoryViewDTO> categories)
+        public static ImmutableList<Category> MapCategoryViewCollection(IEnumerable<CategoryViewForFilmDTO> categories)
         {
             ImmutableList<Category> entityList = [];
 
             if (categories == null) { return entityList; }
 
-            foreach (CategoryViewDTO category in categories)
+            foreach (CategoryViewForFilmDTO category in categories)
             {
                 if (MapCategoryView(category) is Category mappedCategory)
                 {
@@ -54,7 +54,7 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static Director? MapDirectorUpdate(DirectorUpdateDTO updateDirector) => updateDirector == null ? null : new() { DirectorId = updateDirector.DirectorId, Name = updateDirector.Name, Films = MapFilmViewCollection(updateDirector.Films) };
 
-        public static Director? MapDirectorView(DirectorViewDTO director) => director == null ? null : new() { DirectorId = director.DirectorId, Name = director.Name, Films = MapFilmViewCollection(director.Films) };
+        public static Director? MapDirectorView(DirectorViewForFilmDTO director) => director == null ? null : new() { DirectorId = director.DirectorId, Name = director.Name };
 
         public static Film? MapFilmCreate(FilmCreateDTO createFilm) => createFilm == null ? null : new() { Title = createFilm.Title, Description = createFilm.Description, DirectorId = createFilm.DirectorId, FormatId = createFilm.FormatId, Quantity = createFilm.Quantity, Year = createFilm.Year, Studio = createFilm.Studio, IsFavorite = createFilm.IsFavorite, IsRareCollectibleAndOrValuable = createFilm.IsRareCollectibleAndOrValuable, CreateDate = createFilm.CreateDate };
 
@@ -82,6 +82,6 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static Format? MapFormatUpdate(FormatUpdateDTO updateFormat) => updateFormat == null ? null : new() { FormatId = updateFormat.FormatId, FormatName = updateFormat.FormatName, Films = MapFilmViewCollection(updateFormat.Films) };
 
-        public static Format MapFormatView(FormatViewDTO format) => format == null ? new() : new() { FormatId = format.FormatId, FormatName = format.FormatName, Films = MapFilmViewCollection(format.Films) };
+        public static Format MapFormatView(FormatViewForFilmDTO format) => format == null ? new() : new() { FormatId = format.FormatId, FormatName = format.FormatName };
     }
 }

@@ -14,10 +14,10 @@
         public bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime CreateDate { get; init; }
         public DateTime? UpdateDate { get; init; }
-        public DirectorViewDTO? Director { get; init; }
-        public required FormatViewDTO Format { get; init; }
-        public required IEnumerable<ActorViewDTO> Actors { get; init; }
-        public required IEnumerable<CategoryViewDTO> Categories { get; init; }
+        public DirectorViewForFilmDTO? Director { get; init; }
+        public required FormatViewForFilmDTO Format { get; init; }
+        public required IEnumerable<ActorViewForFilmDTO> Actors { get; init; }
+        public required IEnumerable<CategoryViewForFilmDTO> Categories { get; init; }
 
         public static FilmViewDTO NotFound => new()
         {
@@ -25,9 +25,9 @@
             Title = "not found",
             FormatId = 0,
             Quantity = 0,
-            Format = FormatViewDTO.NotFound,
-            Actors = Enumerable.Empty<ActorViewDTO>(),
-            Categories = Enumerable.Empty<CategoryViewDTO>(),
+            Format = FormatViewForFilmDTO.NotFound,
+            Actors = Enumerable.Empty<ActorViewForFilmDTO>(),
+            Categories = Enumerable.Empty<CategoryViewForFilmDTO>(),
         };
     }
 }

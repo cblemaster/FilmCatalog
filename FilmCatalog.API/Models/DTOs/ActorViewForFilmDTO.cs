@@ -1,18 +1,15 @@
 ﻿namespace FilmCatalog.API.Models.DTOs
 {
-    public class ActorViewDTO
+    public class ActorViewForFilmDTO
     {
         public required int ActorId { get; init; }
 
         public required string Name { get; init; }
 
-        public required IEnumerable<FilmViewForNonFilmTypesDTO> Films { get; init; }
-
-        public static ActorViewDTO NotFound => new()
+        public static ActorViewForFilmDTO NotFound => new()
         {
             ActorId = 0,
             Name = "not found",
-            Films = Enumerable.Empty<FilmViewForNonFilmTypesDTO>(),
         };
     }
 }

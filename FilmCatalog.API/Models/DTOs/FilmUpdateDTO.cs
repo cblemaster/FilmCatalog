@@ -13,8 +13,8 @@
         public bool IsFavorite { get; init; }
         public bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime UpdateDate { get; init; }
-        public required IEnumerable<ActorViewDTO> Actors { get; init; }
-        public required IEnumerable<CategoryViewDTO> Categories { get; init; }
+        public required IEnumerable<ActorViewForFilmDTO> Actors { get; init; }
+        public required IEnumerable<CategoryViewForFilmDTO> Categories { get; init; }
 
         public (bool IsValid, string ErrorMessage) Validate()
         {
