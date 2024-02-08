@@ -72,6 +72,20 @@ CREATE TABLE Films (
 )
 GO
 
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Star Wars','Where it all began...',(SELECT d.DirectorId FROM Directors d WHERE d.Name = 'George Lucas'),(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'1977',null,1,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Boogie Nights',null,(SELECT d.DirectorId FROM Directors d WHERE d.Name = 'Paul Thomas Anderson'),(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'1997',null,1,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Flash Gordon',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'1980',null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('The Karate Kid',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'DVD'),1,null,null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Argo',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'2013',null,1,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Back to the Future',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,null,null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('The Martian',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'2015',null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Dune',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'DVD'),1,null,null,1,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('The Graduate',null,(SELECT d.DirectorId FROM Directors d WHERE d.Name = 'Mike Nichols'),(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'DVD'),1,'1967',null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Braveheart',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'DVD'),1,null,null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('The Matrix',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'DVD'),1,'1999',null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('Kung-Fu Panda',null,null,(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'2008',null,0,0,GETDATE(),null);
+INSERT INTO Films(Title,[Description],DirectorId,FormatId,Quantity,[Year],Studio,IsFavorite,IsRareCollectibleAndOrValuable,CreateDate,UpdateDate) VALUES('2001: A Space Odyssey',null,(SELECT d.DirectorId FROM Directors d WHERE d.Name = 'Stanley Kubrick'),(SELECT f.FormatId FROM Formats f WHERE f.FormatName = 'Blu-ray'),1,'1968',null,1,0,GETDATE(),null);
+
 CREATE TABLE Actors (
 	ActorId				int IDENTITY(1,1)					NOT NULL,
 	[Name]				varchar(255)						NOT NULL,
@@ -136,7 +150,6 @@ INSERT INTO Actors(Name) VALUES('Sam Jones');
 INSERT INTO Actors(Name) VALUES('Max Von Sydow');
 INSERT INTO Actors(Name) VALUES('Heather Graham');
 INSERT INTO Actors(Name) VALUES('Julianne Moore');
-INSERT INTO Actors(Name) VALUES('Matt Damon');
 
 CREATE TABLE Categories (
 	CategoryId			int IDENTITY(1,1)					NOT NULL,
@@ -163,6 +176,8 @@ INSERT INTO Categories(CategoryName) VALUES('Autobiography');
 INSERT INTO Categories(CategoryName) VALUES('Sports');
 INSERT INTO Categories(CategoryName) VALUES('Drama');
 INSERT INTO Categories(CategoryName) VALUES('Foreign cinema');
+INSERT INTO Categories(CategoryName) VALUES('Comedy');
+INSERT INTO Categories(CategoryName) VALUES('Animated');
 
 CREATE TABLE FilmsCategories (
 	FilmId				int									NOT NULL,
@@ -173,6 +188,25 @@ CREATE TABLE FilmsCategories (
 )
 GO
 
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Star Wars'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Space opera'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Boogie Nights'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Drama'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Flash Gordon'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Space opera'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Karate Kid'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Drama'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Karate Kid'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Argo'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Drama'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Argo'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Action/Thriller'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Back to the Future'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Back to the Future'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Adventure'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Martian'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Dune'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Graduate'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Drama'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Graduate'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Braveheart'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Space opera'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Matrix'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Space opera'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Kung-Fu Panda'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Kung-Fu Panda'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Animated'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = '2001: A Space Odyssey'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
+
 CREATE TABLE FilmsActors (
 	FilmId				int									NOT NULL,
 	ActorId				int									NOT NULL,
@@ -181,3 +215,23 @@ CREATE TABLE FilmsActors (
 	CONSTRAINT FK_FilmsActors_Actors FOREIGN KEY(ActorId) REFERENCES Actors(ActorId),
 )
 GO
+
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Star Wars'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Mark Hammil'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Star Wars'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Harrison Ford'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Star Wars'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Carrie Fisher'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Star Wars'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Alec Guiness'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Boogie Nights'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Mark Wahlburg'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Boogie Nights'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Julianne Moore'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Flash Gordon'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Sam Jones'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Flash Gordon'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Max Von Sydow'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Karate Kid'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Pat Morita'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Karate Kid'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Elizabeth Shue'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Karate Kid'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Ralph Maccio'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Argo'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Ben Affleck'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Argo'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Bryan Cranston'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Argo'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'John Goodman'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Back to the Future'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Michael J. Fox'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Martian'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Matt Damon'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Graduate'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Dustin Hoffman'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Braveheart'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Mel Gibson'));
+INSERT INTO FilmsActors(FilmId,ActorId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Matrix'),(SELECT a.ActorId FROM Actors a WHERE a.Name = 'Keanu Reeves'));
