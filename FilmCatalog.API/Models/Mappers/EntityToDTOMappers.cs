@@ -9,7 +9,7 @@ namespace FilmCatalog.API.Models.Mappers
     public static class EntityToDTOMappers
     {
         public static ActorViewDTO MapActor(Actor actor) => actor == null ? ActorViewDTO.NotFound : new() { ActorId = actor.ActorId, Name = actor.Name, Films = MapFilms(actor.Films) };
-                
+
         public static ImmutableList<ActorViewDTO> MapActors(IEnumerable<Actor> actors)
         {
             ImmutableList<ActorViewDTO> dtoList = [];
@@ -53,7 +53,7 @@ namespace FilmCatalog.API.Models.Mappers
             return dtoList;
         }
 
-        public static FilmViewDTO MapFilm(Film film) => film == null ? FilmViewDTO.NotFound : new() { FilmId = film.FilmId, Title = film.Title, Description = film.Description, DirectorId = film.DirectorId, FormatId = film.FormatId, Quantity = film.Quantity, Year = film.Year, Studio = film.Studio, IsFavorite = film.IsFavorite, IsRareCollectibleAndOrValuable = film.IsRareCollectibleAndOrValuable, CreateDate = film.CreateDate, UpdateDate = film.UpdateDate, Director = MapDirector(film.Director), Format = MapFormat(film.Format), Actors = MapActors(film.Actors), Categories = MapCategories(film.Categories) };
+        public static FilmViewDTO MapFilm(Film film) => film == null ? FilmViewDTO.NotFound : new() { FilmId = film.FilmId, Title = film.Title, Description = film.Description, DirectorId = film.DirectorId, FormatId = film.FormatId, Quantity = film.Quantity, Year = film.Year, Studio = film.Studio, IsFavorite = film.IsFavorite, IsRareCollectibleAndOrValuable = film.IsRareCollectibleAndOrValuable, CreateDate = film.CreateDate, UpdateDate = film.UpdateDate, Director = film.Director == null ? null : MapDirector(film.Director), Format = MapFormat(film.Format), Actors = MapActors(film.Actors), Categories = MapCategories(film.Categories) };
 
         public static ImmutableList<FilmViewDTO> MapFilms(IEnumerable<Film> films)
         {

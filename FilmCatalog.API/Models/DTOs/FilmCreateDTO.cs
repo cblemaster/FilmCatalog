@@ -8,7 +8,7 @@
         public required int FormatId { get; init; }
         public required int Quantity { get; init; }
         public string? Year { get; init; }
-        public string? Studio {  get; init; }
+        public string? Studio { get; init; }
         public bool IsFavorite { get; init; }
         public bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime CreateDate { get; init; }

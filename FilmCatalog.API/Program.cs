@@ -1,5 +1,8 @@
 using FilmCatalog.API.Context;
+using FilmCatalog.API.Models.DTOs;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Actor = FilmCatalog.API.Models.Entities.Actor;
 
 var builder = WebApplication.CreateBuilder(args);
 

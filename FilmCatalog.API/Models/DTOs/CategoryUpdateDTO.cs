@@ -3,7 +3,7 @@
     public class CategoryUpdateDTO
     {
         public required int CategoryId { get; init; }
-        
+
         public required string CategoryName { get; init; }
 
         public required IEnumerable<FilmViewDTO> Films { get; init; }
