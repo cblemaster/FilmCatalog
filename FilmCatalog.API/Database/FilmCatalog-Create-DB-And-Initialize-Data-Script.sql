@@ -198,11 +198,10 @@ INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Film
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Back to the Future'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Back to the Future'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Adventure'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Martian'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
-INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Dune'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Graduate'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Drama'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Graduate'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
-INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Braveheart'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Space opera'));
-INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Matrix'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Space opera'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Braveheart'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Historical fiction'));
+INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'The Matrix'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Kung-Fu Panda'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Comedy'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = 'Kung-Fu Panda'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Animated'));
 INSERT INTO FilmsCategories(FilmId,CategoryId) VALUES((SELECT f.FilmId FROM Films f WHERE f.Title = '2001: A Space Odyssey'),(SELECT c.CategoryId FROM Categories c WHERE c.CategoryName = 'Science Fiction'));
