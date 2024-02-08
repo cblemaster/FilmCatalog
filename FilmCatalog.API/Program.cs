@@ -1,5 +1,6 @@
 using FilmCatalog.API.Context;
 using FilmCatalog.API.Models.DTOs;
+using FilmCatalog.API.Models.Entities;
 using FilmCatalog.API.Models.Mappers;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -38,9 +39,23 @@ app.MapPut("Actor/Update/{actorId:int}", (FilmCatalogContext context, ActorUpdat
 
 });
 
-app.MapDelete("Actor/Delete/{actorId:int}", (FilmCatalogContext context, int actorId) =>
+app.MapDelete("Actor/Delete/{actorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int actorId) =>
 {
+    if (actorId < 1)
+    {
+        return TypedResults.BadRequest("Invalid actor id.");
+    }
+    
+    Actor actorToDelete = await context.Actors.SingleOrDefaultAsync(a => a.ActorId == actorId);
 
+    if (actorToDelete is not null)
+    {
+        context.Actors.Remove(actorToDelete);
+        context.SaveChanges();
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Actor to delete not found.");
 });
 #endregion
 
@@ -63,9 +78,23 @@ app.MapPut("Category/Update/{categoryId:int}", (FilmCatalogContext context, Cate
 
 });
 
-app.MapDelete("Category/Delete/{categoryId:int}", (FilmCatalogContext context, int categoryId) =>
+app.MapDelete("Category/Delete/{categoryId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int categoryId) =>
 {
+    if (categoryId < 1)
+    {
+        return TypedResults.BadRequest("Invalid category id.");
+    }
 
+    Category categoryToDelete = await context.Categories.SingleOrDefaultAsync(c => c.CategoryId == categoryId);
+
+    if (categoryToDelete is not null)
+    {
+        context.Categories.Remove(categoryToDelete);
+        context.SaveChanges();
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Category to delete not found.");
 });
 #endregion
 
@@ -88,9 +117,23 @@ app.MapPut("Director/Update/{directorId:int}", (FilmCatalogContext context, Dire
 
 });
 
-app.MapDelete("Director/Delete/{directorId:int}", (FilmCatalogContext context, int directorId) =>
+app.MapDelete("Director/Delete/{directorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int directorId) =>
 {
+    if (directorId < 1)
+    {
+        return TypedResults.BadRequest("Invalid director id.");
+    }
 
+    Director directorToDelete = await context.Directors.SingleOrDefaultAsync(d => d.DirectorId == directorId);
+
+    if (directorToDelete is not null)
+    {
+        context.Directors.Remove(directorToDelete);
+        context.SaveChanges();
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Director to delete not found.");
 });
 #endregion
 
@@ -113,9 +156,23 @@ app.MapPut("Film/Update/{filmId:int}", (FilmCatalogContext context, FilmUpdateDT
 
 });
 
-app.MapDelete("Film/Delete/{filmId:int}", (FilmCatalogContext context, int filmId) =>
+app.MapDelete("Film/Delete/{filmId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int filmId) =>
 {
+    if (filmId < 1)
+    {
+        return TypedResults.BadRequest("Invalid film id.");
+    }
 
+    Film filmToDelete = await context.Films.SingleOrDefaultAsync(f => f.FilmId == filmId);
+
+    if (filmToDelete is not null)
+    {
+        context.Films.Remove(filmToDelete);
+        context.SaveChanges();
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Film to delete not found.");
 });
 #endregion
 
@@ -138,9 +195,23 @@ app.MapPut("Format/Update/{formatId:int}", (FilmCatalogContext context, FormatUp
 
 });
 
-app.MapDelete("Format/Delete/{formatId:int}", (FilmCatalogContext context, int formatId) =>
+app.MapDelete("Format/Delete/{formatId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int formatId) =>
 {
+    if (formatId < 1)
+    {
+        return TypedResults.BadRequest("Invalid format id.");
+    }
 
+    Format formatToDelete = await context.Formats.SingleOrDefaultAsync(f => f.FormatId == formatId);
+
+    if (formatToDelete is not null)
+    {
+        context.Formats.Remove(formatToDelete);
+        context.SaveChanges();
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Format to delete not found.");
 });
 #endregion
 
