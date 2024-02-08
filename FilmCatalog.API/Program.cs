@@ -29,17 +29,17 @@ app.MapGet("/Actor", Results<Ok<IEnumerable<ActorViewDTO>>, NotFound<string>> (F
         ? TypedResults.Ok(actors)
         : TypedResults.NotFound("Actors not found."));
 
-app.MapPost("Actor/Create", (FilmCatalogContext context, ActorCreateDTO createActor) =>
+app.MapPost("/Actor", (FilmCatalogContext context, ActorCreateDTO createActor) =>
 {
 
 });
 
-app.MapPut("Actor/Update/{actorId:int}", (FilmCatalogContext context, ActorUpdateDTO updateActor, int actorId) =>
+app.MapPut("/Actor/{actorId:int}", (FilmCatalogContext context, ActorUpdateDTO updateActor, int actorId) =>
 {
 
 });
 
-app.MapDelete("Actor/Delete/{actorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int actorId) =>
+app.MapDelete("/Actor/{actorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int actorId) =>
 {
     if (actorId < 1)
     {
@@ -68,17 +68,17 @@ app.MapGet("/Category", Results<Ok<IEnumerable<CategoryViewDTO>>, NotFound<strin
         ? TypedResults.Ok(categories)
         : TypedResults.NotFound("Categories not found."));
 
-app.MapPost("Category/Create", (FilmCatalogContext context, CategoryCreateDTO createCategory) =>
+app.MapPost("/Category", (FilmCatalogContext context, CategoryCreateDTO createCategory) =>
 {
 
 });
 
-app.MapPut("Category/Update/{categoryId:int}", (FilmCatalogContext context, CategoryUpdateDTO updateCategory, int categoryId) =>
+app.MapPut("/Category/{categoryId:int}", (FilmCatalogContext context, CategoryUpdateDTO updateCategory, int categoryId) =>
 {
 
 });
 
-app.MapDelete("Category/Delete/{categoryId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int categoryId) =>
+app.MapDelete("/Category/{categoryId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int categoryId) =>
 {
     if (categoryId < 1)
     {
@@ -107,17 +107,17 @@ app.MapGet("/Director", Results<Ok<IEnumerable<DirectorViewDTO>>, NotFound<strin
         ? TypedResults.Ok(directors)
         : TypedResults.NotFound("Directors not found."));
 
-app.MapPost("Director/Create", (FilmCatalogContext context, DirectorCreateDTO createDirector) =>
+app.MapPost("/Director", (FilmCatalogContext context, DirectorCreateDTO createDirector) =>
 {
 
 });
 
-app.MapPut("Director/Update/{directorId:int}", (FilmCatalogContext context, DirectorUpdateDTO updateDirector, int directorId) =>
+app.MapPut("/Director/{directorId:int}", (FilmCatalogContext context, DirectorUpdateDTO updateDirector, int directorId) =>
 {
 
 });
 
-app.MapDelete("Director/Delete/{directorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int directorId) =>
+app.MapDelete("/Director/{directorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int directorId) =>
 {
     if (directorId < 1)
     {
@@ -146,17 +146,17 @@ app.MapGet("/Film", Results<Ok<IEnumerable<FilmViewDTO>>, NotFound<string>> (Fil
         ? TypedResults.Ok(films)
         : TypedResults.NotFound("Films not found."));
 
-app.MapPost("Film/Create", (FilmCatalogContext context, FilmCreateDTO createFilm) =>
+app.MapPost("/Film", (FilmCatalogContext context, FilmCreateDTO createFilm) =>
 {
 
 });
 
-app.MapPut("Film/Update/{filmId:int}", (FilmCatalogContext context, FilmUpdateDTO updateFilm, int filmId) =>
+app.MapPut("/Film/{filmId:int}", (FilmCatalogContext context, FilmUpdateDTO updateFilm, int filmId) =>
 {
 
 });
 
-app.MapDelete("Film/Delete/{filmId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int filmId) =>
+app.MapDelete("/Film/{filmId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int filmId) =>
 {
     if (filmId < 1)
     {
@@ -185,17 +185,17 @@ app.MapGet("/Format", Results<Ok<IEnumerable<FormatViewDTO>>, NotFound<string>> 
         ? TypedResults.Ok(formats)
         : TypedResults.NotFound("Formats not found."));
 
-app.MapPost("Format/Create", (FilmCatalogContext context, FormatCreateDTO createFormat) =>
+app.MapPost("/Format", (FilmCatalogContext context, FormatCreateDTO createFormat) =>
 {
 
 });
 
-app.MapPut("Format/Update/{formatId:int}", (FilmCatalogContext context, FormatUpdateDTO updateFormat, int formatId) =>
+app.MapPut("/Format/{formatId:int}", (FilmCatalogContext context, FormatUpdateDTO updateFormat, int formatId) =>
 {
 
 });
 
-app.MapDelete("Format/Delete/{formatId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int formatId) =>
+app.MapDelete("/Format/{formatId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int formatId) =>
 {
     if (formatId < 1)
     {
