@@ -12,6 +12,8 @@
         public bool IsFavorite { get; init; }
         public bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime CreateDate { get; init; }
+        public IEnumerable<ActorViewForFilmDTO> Actors { get; init; } = new List<ActorViewForFilmDTO>();
+        public IEnumerable<CategoryViewForFilmDTO> Categories { get; init; } = new List<CategoryViewForFilmDTO>();
 
         public (bool IsValid, string ErrorMessage) Validate()
         {

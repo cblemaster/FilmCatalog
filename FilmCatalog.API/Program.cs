@@ -29,9 +29,24 @@ app.MapGet("/Actor", Results<Ok<IEnumerable<ActorViewDTO>>, NotFound<string>> (F
         ? TypedResults.Ok(actors)
         : TypedResults.NotFound("Actors not found."));
 
-app.MapPost("/Actor", (FilmCatalogContext context, ActorCreateDTO createActor) =>
+app.MapPost("/Actor", async Task<Results<BadRequest<string>, Created<Actor>>> (FilmCatalogContext context, ActorCreateDTO createActor) =>
 {
+    (bool IsValid, string ErrorMessage) = createActor.Validate();
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
 
+    Actor? actorToCreate = DTOToEntityMappers.MapActorCreate(createActor);
+
+    if (actorToCreate is not null)
+    {
+        context.Actors.Add(actorToCreate);
+        await context.SaveChangesAsync();
+        return TypedResults.Created($"/Actor/{actorToCreate.ActorId}", actorToCreate);
+    }
+
+    return TypedResults.BadRequest("Unable to create actor.");
 });
 
 app.MapPut("/Actor/{actorId:int}", (FilmCatalogContext context, ActorUpdateDTO updateActor, int actorId) =>
@@ -45,13 +60,13 @@ app.MapDelete("/Actor/{actorId:int}", async Task<Results<BadRequest<string>, NoC
     {
         return TypedResults.BadRequest("Invalid actor id.");
     }
-    
+
     Actor actorToDelete = await context.Actors.SingleOrDefaultAsync(a => a.ActorId == actorId);
 
     if (actorToDelete is not null)
     {
         context.Actors.Remove(actorToDelete);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return TypedResults.NoContent();
     }
 
@@ -68,9 +83,24 @@ app.MapGet("/Category", Results<Ok<IEnumerable<CategoryViewDTO>>, NotFound<strin
         ? TypedResults.Ok(categories)
         : TypedResults.NotFound("Categories not found."));
 
-app.MapPost("/Category", (FilmCatalogContext context, CategoryCreateDTO createCategory) =>
+app.MapPost("/Category", async Task<Results<BadRequest<string>, Created<Category>>> (FilmCatalogContext context, CategoryCreateDTO createCategory) =>
 {
+    (bool IsValid, string ErrorMessage) = createCategory.Validate();
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
 
+    Category? categoryToCreate = DTOToEntityMappers.MapCategoryCreate(createCategory);
+
+    if (categoryToCreate is not null)
+    {
+        context.Categories.Add(categoryToCreate);
+        await context.SaveChangesAsync();
+        return TypedResults.Created($"/Category/{categoryToCreate.CategoryId}", categoryToCreate);
+    }
+
+    return TypedResults.BadRequest("Unable to create category.");
 });
 
 app.MapPut("/Category/{categoryId:int}", (FilmCatalogContext context, CategoryUpdateDTO updateCategory, int categoryId) =>
@@ -90,7 +120,7 @@ app.MapDelete("/Category/{categoryId:int}", async Task<Results<BadRequest<string
     if (categoryToDelete is not null)
     {
         context.Categories.Remove(categoryToDelete);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return TypedResults.NoContent();
     }
 
@@ -107,9 +137,24 @@ app.MapGet("/Director", Results<Ok<IEnumerable<DirectorViewDTO>>, NotFound<strin
         ? TypedResults.Ok(directors)
         : TypedResults.NotFound("Directors not found."));
 
-app.MapPost("/Director", (FilmCatalogContext context, DirectorCreateDTO createDirector) =>
+app.MapPost("/Director", async Task<Results<BadRequest<string>, Created<Director>>> (FilmCatalogContext context, DirectorCreateDTO createDirector) =>
 {
+    (bool IsValid, string ErrorMessage) = createDirector.Validate();
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
 
+    Director? directorToCreate = DTOToEntityMappers.MapDirectorCreate(createDirector);
+
+    if (directorToCreate is not null)
+    {
+        context.Directors.Add(directorToCreate);
+        await context.SaveChangesAsync();
+        return TypedResults.Created($"/Director/{directorToCreate.DirectorId}", directorToCreate);
+    }
+
+    return TypedResults.BadRequest("Unable to create director.");
 });
 
 app.MapPut("/Director/{directorId:int}", (FilmCatalogContext context, DirectorUpdateDTO updateDirector, int directorId) =>
@@ -129,7 +174,7 @@ app.MapDelete("/Director/{directorId:int}", async Task<Results<BadRequest<string
     if (directorToDelete is not null)
     {
         context.Directors.Remove(directorToDelete);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return TypedResults.NoContent();
     }
 
@@ -146,9 +191,42 @@ app.MapGet("/Film", Results<Ok<IEnumerable<FilmViewDTO>>, NotFound<string>> (Fil
         ? TypedResults.Ok(films)
         : TypedResults.NotFound("Films not found."));
 
-app.MapPost("/Film", (FilmCatalogContext context, FilmCreateDTO createFilm) =>
+app.MapPost("/Film", async Task<Results<BadRequest<string>, Created<FilmViewDTO>>> (FilmCatalogContext context, FilmCreateDTO createFilm) =>
 {
+    (bool IsValid, string ErrorMessage) = createFilm.Validate();
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
 
+    Film? filmToCreate = DTOToEntityMappers.MapFilmCreate(createFilm);
+
+    if (filmToCreate is not null)
+    {
+        foreach (Actor actor in filmToCreate.Actors)
+        {
+            if (actor.ActorId > 0)
+            {
+                context.Actors.Attach(actor);
+            }
+        }
+        foreach (Category category in filmToCreate.Categories)
+        {
+            if (category.CategoryId > 0)
+            {
+                context.Categories.Attach(category);
+            }
+        }
+
+        context.Films.Add(filmToCreate);
+        await context.SaveChangesAsync();
+
+        Film? createdFilm = await context.Films.Include(f => f.Director).Include(f => f.Format).Include(f => f.Categories).Include(f => f.Actors).SingleOrDefaultAsync(f => f.FilmId == filmToCreate.FilmId);
+
+        return TypedResults.Created($"/Film/{createdFilm.FilmId}", EntityToDTOMappers.MapFilm(createdFilm));
+    }
+
+    return TypedResults.BadRequest("Unable to create film.");
 });
 
 app.MapPut("/Film/{filmId:int}", (FilmCatalogContext context, FilmUpdateDTO updateFilm, int filmId) =>
@@ -168,7 +246,7 @@ app.MapDelete("/Film/{filmId:int}", async Task<Results<BadRequest<string>, NoCon
     if (filmToDelete is not null)
     {
         context.Films.Remove(filmToDelete);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return TypedResults.NoContent();
     }
 
@@ -185,9 +263,24 @@ app.MapGet("/Format", Results<Ok<IEnumerable<FormatViewDTO>>, NotFound<string>> 
         ? TypedResults.Ok(formats)
         : TypedResults.NotFound("Formats not found."));
 
-app.MapPost("/Format", (FilmCatalogContext context, FormatCreateDTO createFormat) =>
+app.MapPost("/Format", async Task<Results<BadRequest<string>, Created<Format>>> (FilmCatalogContext context, FormatCreateDTO createFormat) =>
 {
+    (bool IsValid, string ErrorMessage) = createFormat.Validate();
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
 
+    Format? formatToCreate = DTOToEntityMappers.MapFormatCreate(createFormat);
+
+    if (formatToCreate is not null)
+    {
+        context.Formats.Add(formatToCreate);
+        await context.SaveChangesAsync();
+        return TypedResults.Created($"/Format/{formatToCreate.FormatId}", formatToCreate);
+    }
+
+    return TypedResults.BadRequest("Unable to create format.");
 });
 
 app.MapPut("/Format/{formatId:int}", (FilmCatalogContext context, FormatUpdateDTO updateFormat, int formatId) =>
@@ -207,7 +300,7 @@ app.MapDelete("/Format/{formatId:int}", async Task<Results<BadRequest<string>, N
     if (formatToDelete is not null)
     {
         context.Formats.Remove(formatToDelete);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return TypedResults.NoContent();
     }
 
