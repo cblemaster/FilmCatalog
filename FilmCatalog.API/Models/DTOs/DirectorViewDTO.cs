@@ -6,13 +6,10 @@
 
         public required string Name { get; init; }
 
-        public required IEnumerable<FilmViewForNonFilmTypesDTO> Films { get; init; }
-
         public static DirectorViewDTO NotFound => new()
         {
             DirectorId = 0,
             Name = "not found",
-            Films = Enumerable.Empty<FilmViewForNonFilmTypesDTO>(),
         };
     }
 }

@@ -7,9 +7,26 @@ namespace FilmCatalog.API.Models.Mappers
 {
     public static class EntityToDTOMappers
     {
-        public static ActorViewDTO MapActor(Actor actor) => actor == null ? ActorViewDTO.NotFound : new() { ActorId = actor.ActorId, Name = actor.Name, Films = MapFilmsForNonFilmTypes(actor.Films) };
+        public static ActorViewWithFilmsDTO MapActorWithFilms(Actor actor) => actor == null
+            ? ActorViewWithFilmsDTO.NotFound
+            : new() { ActorId = actor.ActorId, Name = actor.Name, Films = MapFilms(actor.Films) };
 
-        public static ActorViewForFilmDTO MapActorForFilm(Actor actor) => actor == null ? ActorViewForFilmDTO.NotFound : new() { ActorId = actor.ActorId, Name = actor.Name };
+        public static ActorViewDTO MapActor(Actor actor) => actor == null
+            ? ActorViewDTO.NotFound
+            : new() { ActorId = actor.ActorId, Name = actor.Name };
+
+        public static IEnumerable<ActorViewWithFilmsDTO> MapActorsWithFilms(IEnumerable<Actor> actors)
+        {
+            List<ActorViewWithFilmsDTO> dtoList = [];
+
+            if (actors == null) { return dtoList; }
+
+            foreach (Actor actor in actors)
+            {
+                dtoList.Add(MapActorWithFilms(actor));
+            }
+            return dtoList;
+        }
 
         public static IEnumerable<ActorViewDTO> MapActors(IEnumerable<Actor> actors)
         {
@@ -24,22 +41,26 @@ namespace FilmCatalog.API.Models.Mappers
             return dtoList;
         }
 
-        public static IEnumerable<ActorViewForFilmDTO> MapActorsForFilm(IEnumerable<Actor> actors)
+        public static CategoryViewWithFilmsDTO MapCategoryWithFilms(Category category) => category == null
+            ? CategoryViewWithFilmsDTO.NotFound
+            : new() { CategoryId = category.CategoryId, CategoryName = category.CategoryName, Films = MapFilms(category.Films) };
+
+        public static CategoryViewDTO MapCategory(Category category) => category == null
+            ? CategoryViewDTO.NotFound
+            : new() { CategoryId = category.CategoryId, CategoryName = category.CategoryName };
+
+        public static IEnumerable<CategoryViewWithFilmsDTO> MapCategoriesWithFilms(IEnumerable<Category> categories)
         {
-            List<ActorViewForFilmDTO> dtoList = [];
+            List<CategoryViewWithFilmsDTO> dtoList = [];
 
-            if (actors == null) { return dtoList; }
+            if (categories == null) { return dtoList; }
 
-            foreach (Actor actor in actors)
+            foreach (Category category in categories)
             {
-                dtoList.Add(MapActorForFilm(actor));
+                dtoList.Add(MapCategoryWithFilms(category));
             }
             return dtoList;
         }
-
-        public static CategoryViewDTO MapCategory(Category category) => category == null ? CategoryViewDTO.NotFound : new() { CategoryId = category.CategoryId, CategoryName = category.CategoryName, Films = MapFilmsForNonFilmTypes(category.Films) };
-
-        public static CategoryViewForFilmDTO MapCategoryForFilm(Category category) => category == null ? CategoryViewForFilmDTO.NotFound : new() { CategoryId = category.CategoryId, CategoryName = category.CategoryName };
 
         public static IEnumerable<CategoryViewDTO> MapCategories(IEnumerable<Category> categories)
         {
@@ -54,37 +75,28 @@ namespace FilmCatalog.API.Models.Mappers
             return dtoList;
         }
 
-        public static IEnumerable<CategoryViewForFilmDTO> MapCategoriesForFilm(IEnumerable<Category> categories)
+        public static DirectorViewWithFilmsDTO MapDirectorWithFilms(Director director) => director == null
+            ? DirectorViewWithFilmsDTO.NotFound
+            : new() { DirectorId = director.DirectorId, Name = director.Name, Films = MapFilms(director.Films) };
+
+        public static DirectorViewDTO MapDirector(Director director) => director == null
+            ? DirectorViewDTO.NotFound
+            : new() { DirectorId = director.DirectorId, Name = director.Name };
+
+        public static IEnumerable<DirectorViewWithFilmsDTO> MapDirectorsWithFilms(IEnumerable<Director> directors)
         {
-            List<CategoryViewForFilmDTO> dtoList = [];
-
-            if (categories == null) { return dtoList; }
-
-            foreach (Category category in categories)
-            {
-                dtoList.Add(MapCategoryForFilm(category));
-            }
-            return dtoList;
-        }
-
-        public static DirectorViewDTO MapDirector(Director director) => director == null ? DirectorViewDTO.NotFound : new() { DirectorId = director.DirectorId, Name = director.Name, Films = director.Films == null ? Enumerable.Empty<FilmViewForNonFilmTypesDTO>() : MapFilmsForNonFilmTypes(director.Films) };
-
-        public static DirectorViewForFilmDTO MapDirectorForFilm(Director director) => director == null ? DirectorViewForFilmDTO.NotFound : new() { DirectorId = director.DirectorId, Name = director.Name };
-
-        public static IEnumerable<DirectorViewDTO> MapDirectors(IEnumerable<Director> directors)
-        {
-            List<DirectorViewDTO> dtoList = [];
+            List<DirectorViewWithFilmsDTO> dtoList = [];
 
             if (directors == null) { return dtoList; }
 
             foreach (Director director in directors)
             {
-                dtoList.Add(MapDirector(director));
+                dtoList.Add(MapDirectorWithFilms(director));
             }
             return dtoList;
         }
 
-        public static FilmViewDTO MapFilm(Film film) => film == null ? FilmViewDTO.NotFound : new() { FilmId = film.FilmId, Title = film.Title, Description = film.Description, DirectorId = film.DirectorId, FormatId = film.FormatId, Quantity = film.Quantity, Year = film.Year, Studio = film.Studio, IsFavorite = film.IsFavorite, IsRareCollectibleAndOrValuable = film.IsRareCollectibleAndOrValuable, CreateDate = film.CreateDate, UpdateDate = film.UpdateDate, Director = film.Director == null ? null : MapDirectorForFilm(film.Director), Format = MapFormatForFilm(film.Format), Actors = MapActorsForFilm(film.Actors), Categories = MapCategoriesForFilm(film.Categories) };
+        public static FilmViewDTO MapFilm(Film film) => film == null ? FilmViewDTO.NotFound : new() { FilmId = film.FilmId, Title = film.Title, Description = film.Description, DirectorId = film.DirectorId, FormatId = film.FormatId, Quantity = film.Quantity, Year = film.Year, Studio = film.Studio, IsFavorite = film.IsFavorite, IsRareCollectibleAndOrValuable = film.IsRareCollectibleAndOrValuable, CreateDate = film.CreateDate, UpdateDate = film.UpdateDate, Director = film.Director == null ? null : MapDirector(film.Director), Format = MapFormat(film.Format), Actors = MapActors(film.Actors), Categories = MapCategories(film.Categories) };
 
         public static FilmViewForNonFilmTypesDTO MapFilmForNonFilmTypes(Film film) => film == null ? FilmViewForNonFilmTypesDTO.NotFound : new() { FilmId = film.FilmId, Title = film.Title, Description = film.Description, Quantity = film.Quantity, Year = film.Year, Studio = film.Studio, IsFavorite = film.IsFavorite, IsRareCollectibleAndOrValuable = film.IsRareCollectibleAndOrValuable, CreateDate = film.CreateDate, UpdateDate = film.UpdateDate };
 
@@ -114,19 +126,23 @@ namespace FilmCatalog.API.Models.Mappers
             return dtoList;
         }
 
-        public static FormatViewDTO MapFormat(Format format) => format == null ? FormatViewDTO.NotFound : new() { FormatId = format.FormatId, FormatName = format.FormatName, Films = MapFilmsForNonFilmTypes(format.Films) };
+        public static FormatViewWithFilmsDTO MapFormatWithFilms(Format format) => format == null
+            ? FormatViewWithFilmsDTO.NotFound
+            : new() { FormatId = format.FormatId, FormatName = format.FormatName, Films = MapFilms(format.Films) };
 
-        public static FormatViewForFilmDTO MapFormatForFilm(Format format) => format == null ? FormatViewForFilmDTO.NotFound : new() { FormatId = format.FormatId, FormatName = format.FormatName };
+        public static FormatViewDTO MapFormat(Format format) => format == null
+            ? FormatViewDTO.NotFound
+            : new() { FormatId = format.FormatId, FormatName = format.FormatName };
 
-        public static IEnumerable<FormatViewDTO> MapFormats(IEnumerable<Format> formats)
+        public static IEnumerable<FormatViewWithFilmsDTO> MapFormatsWithFilms(IEnumerable<Format> formats)
         {
-            List<FormatViewDTO> dtoList = [];
+            List<FormatViewWithFilmsDTO> dtoList = [];
 
             if (formats == null) { return dtoList; }
 
             foreach (Format format in formats)
             {
-                dtoList.Add(MapFormat(format));
+                dtoList.Add(MapFormatWithFilms(format));
             }
             return dtoList;
         }

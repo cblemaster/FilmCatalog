@@ -6,13 +6,10 @@
 
         public required string FormatName { get; init; }
 
-        public required IEnumerable<FilmViewForNonFilmTypesDTO> Films { get; init; }
-
         public static FormatViewDTO NotFound => new()
         {
             FormatId = 0,
             FormatName = "not found",
-            Films = Enumerable.Empty<FilmViewForNonFilmTypesDTO>(),
         };
     }
 }

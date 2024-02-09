@@ -21,11 +21,24 @@ var app = builder.Build();
 app.MapGet("/", () => "Hello World!");
 
 #region actor endpoints
-app.MapGet("/Actor/{actorId:int}", async Task<Results<Ok<ActorViewDTO>, NotFound<string>>> (FilmCatalogContext context, int actorId) => EntityToDTOMappers.MapActor(await context.Actors.Include(a => a.Films).SingleOrDefaultAsync(a => a.ActorId == actorId)) is ActorViewDTO actor && actor.ActorId > 0
+app.MapGet("/Actor/{actorId:int}", async Task<Results<Ok<ActorViewWithFilmsDTO>, NotFound<string>>> (FilmCatalogContext context, int actorId) =>
+    EntityToDTOMappers.MapActorWithFilms(await context.Actors
+        .Include(a => a.Films).ThenInclude(f => f.Director)
+        .Include(a => a.Films).ThenInclude(f => f.Format)
+        .Include(a => a.Films).ThenInclude(f => f.Categories)
+        .Include(a => a.Films).ThenInclude(f => f.Actors)
+    .SingleOrDefaultAsync(a => a.ActorId == actorId))
+    is ActorViewWithFilmsDTO actor && actor.ActorId > 0
         ? TypedResults.Ok(actor)
         : TypedResults.NotFound("Actor not found."));
 
-app.MapGet("/Actor", Results<Ok<IEnumerable<ActorViewDTO>>, NotFound<string>> (FilmCatalogContext context) => EntityToDTOMappers.MapActors(context.Actors.Include(a => a.Films)) is IEnumerable<ActorViewDTO> actors
+app.MapGet("/Actor", Results<Ok<IEnumerable<ActorViewWithFilmsDTO>>, NotFound<string>> (FilmCatalogContext context) =>
+    EntityToDTOMappers.MapActorsWithFilms(context.Actors
+        .Include(a => a.Films).ThenInclude(f => f.Director)
+        .Include(a => a.Films).ThenInclude(f => f.Format)
+        .Include(a => a.Films).ThenInclude(f => f.Categories)
+        .Include(a => a.Films).ThenInclude(f => f.Actors))
+    is IEnumerable<ActorViewWithFilmsDTO> actors
         ? TypedResults.Ok(actors)
         : TypedResults.NotFound("Actors not found."));
 
@@ -75,11 +88,24 @@ app.MapDelete("/Actor/{actorId:int}", async Task<Results<BadRequest<string>, NoC
 #endregion
 
 #region category endpoints
-app.MapGet("/Category/{categoryId:int}", async Task<Results<Ok<CategoryViewDTO>, NotFound<string>>> (FilmCatalogContext context, int categoryId) => EntityToDTOMappers.MapCategory(await context.Categories.Include(c => c.Films).SingleOrDefaultAsync(c => c.CategoryId == categoryId)) is CategoryViewDTO category && category.CategoryId > 0
+app.MapGet("/Category/{categoryId:int}", async Task<Results<Ok<CategoryViewWithFilmsDTO>, NotFound<string>>> (FilmCatalogContext context, int categoryId) =>
+    EntityToDTOMappers.MapCategoryWithFilms(await context.Categories
+        .Include(c => c.Films).ThenInclude(f => f.Director)
+        .Include(c => c.Films).ThenInclude(f => f.Format)
+        .Include(c => c.Films).ThenInclude(f => f.Categories)
+        .Include(c => c.Films).ThenInclude(f => f.Actors)
+    .SingleOrDefaultAsync(c => c.CategoryId == categoryId))
+    is CategoryViewWithFilmsDTO category && category.CategoryId > 0
         ? TypedResults.Ok(category)
         : TypedResults.NotFound("Category not found."));
 
-app.MapGet("/Category", Results<Ok<IEnumerable<CategoryViewDTO>>, NotFound<string>> (FilmCatalogContext context) => EntityToDTOMappers.MapCategories(context.Categories.Include(c => c.Films)) is IEnumerable<CategoryViewDTO> categories
+app.MapGet("/Category", Results<Ok<IEnumerable<CategoryViewWithFilmsDTO>>, NotFound<string>> (FilmCatalogContext context) =>
+    EntityToDTOMappers.MapCategoriesWithFilms(context.Categories
+        .Include(c => c.Films).ThenInclude(f => f.Director)
+        .Include(c => c.Films).ThenInclude(f => f.Format)
+        .Include(c => c.Films).ThenInclude(f => f.Categories)
+        .Include(c => c.Films).ThenInclude(f => f.Actors))
+    is IEnumerable<CategoryViewWithFilmsDTO> categories
         ? TypedResults.Ok(categories)
         : TypedResults.NotFound("Categories not found."));
 
@@ -129,11 +155,22 @@ app.MapDelete("/Category/{categoryId:int}", async Task<Results<BadRequest<string
 #endregion
 
 #region director endpoints
-app.MapGet("/Director/{directorId:int}", async Task<Results<Ok<DirectorViewDTO>, NotFound<string>>> (FilmCatalogContext context, int directorId) => EntityToDTOMappers.MapDirector(await context.Directors.Include(d => d.Films).SingleOrDefaultAsync(d => d.DirectorId == directorId)) is DirectorViewDTO director && director.DirectorId > 0
+app.MapGet("/Director/{directorId:int}", async Task<Results<Ok<DirectorViewWithFilmsDTO>, NotFound<string>>> (FilmCatalogContext context, int directorId) =>
+    EntityToDTOMappers.MapDirectorWithFilms(await context.Directors
+        .Include(c => c.Films).ThenInclude(f => f.Format)
+        .Include(c => c.Films).ThenInclude(f => f.Categories)
+        .Include(c => c.Films).ThenInclude(f => f.Actors)
+    .SingleOrDefaultAsync(d => d.DirectorId == directorId))
+    is DirectorViewWithFilmsDTO director && director.DirectorId > 0
         ? TypedResults.Ok(director)
         : TypedResults.NotFound("Director not found."));
 
-app.MapGet("/Director", Results<Ok<IEnumerable<DirectorViewDTO>>, NotFound<string>> (FilmCatalogContext context) => EntityToDTOMappers.MapDirectors(context.Directors.Include(d => d.Films)) is IEnumerable<DirectorViewDTO> directors
+app.MapGet("/Director", Results<Ok<IEnumerable<DirectorViewWithFilmsDTO>>, NotFound<string>> (FilmCatalogContext context) =>
+    EntityToDTOMappers.MapDirectorsWithFilms(context.Directors
+        .Include(c => c.Films).ThenInclude(f => f.Format)
+        .Include(c => c.Films).ThenInclude(f => f.Categories)
+        .Include(c => c.Films).ThenInclude(f => f.Actors))
+    is IEnumerable<DirectorViewWithFilmsDTO> directors
         ? TypedResults.Ok(directors)
         : TypedResults.NotFound("Directors not found."));
 
@@ -255,11 +292,22 @@ app.MapDelete("/Film/{filmId:int}", async Task<Results<BadRequest<string>, NoCon
 #endregion
 
 #region format endpoints
-app.MapGet("/Format/{formatId:int}", async Task<Results<Ok<FormatViewDTO>, NotFound<string>>> (FilmCatalogContext context, int formatId) => EntityToDTOMappers.MapFormat(await context.Formats.Include(f => f.Films).SingleOrDefaultAsync(f => f.FormatId == formatId)) is FormatViewDTO format && format.FormatId > 0
+app.MapGet("/Format/{formatId:int}", async Task<Results<Ok<FormatViewWithFilmsDTO>, NotFound<string>>> (FilmCatalogContext context, int formatId) =>
+    EntityToDTOMappers.MapFormatWithFilms(await context.Formats
+        .Include(c => c.Films).ThenInclude(f => f.Director)
+        .Include(c => c.Films).ThenInclude(f => f.Categories)
+        .Include(c => c.Films).ThenInclude(f => f.Actors)
+    .SingleOrDefaultAsync(f => f.FormatId == formatId))
+    is FormatViewWithFilmsDTO format && format.FormatId > 0
         ? TypedResults.Ok(format)
         : TypedResults.NotFound("Format not found."));
 
-app.MapGet("/Format", Results<Ok<IEnumerable<FormatViewDTO>>, NotFound<string>> (FilmCatalogContext context) => EntityToDTOMappers.MapFormats(context.Formats.Include(f => f.Films)) is IEnumerable<FormatViewDTO> formats
+app.MapGet("/Format", Results<Ok<IEnumerable<FormatViewWithFilmsDTO>>, NotFound<string>> (FilmCatalogContext context) =>
+    EntityToDTOMappers.MapFormatsWithFilms(context.Formats
+        .Include(c => c.Films).ThenInclude(f => f.Director)
+        .Include(c => c.Films).ThenInclude(f => f.Categories)
+        .Include(c => c.Films).ThenInclude(f => f.Actors))
+    is IEnumerable<FormatViewWithFilmsDTO> formats
         ? TypedResults.Ok(formats)
         : TypedResults.NotFound("Formats not found."));
 
