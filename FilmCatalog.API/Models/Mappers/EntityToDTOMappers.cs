@@ -16,7 +16,7 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayActor> MapActorCollection(IEnumerable<Actor> actors)
         {
-            if (actors == null || actors.Any())
+            if (actors == null || !actors.Any())
             {
                 return Enumerable.Empty<DisplayActor>().ToList();
             }
@@ -42,7 +42,7 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayCategory> MapCategoryCollection(IEnumerable<Category> categories)
         {
-            if (categories == null || categories.Any())
+            if (categories == null || !categories.Any())
             {
                 return Enumerable.Empty<DisplayCategory>().ToList();
             }
@@ -68,7 +68,7 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayDirector> MapDirectorCollection(IEnumerable<Director> directors)
         {
-            if (directors == null || directors.Any())
+            if (directors == null || !directors.Any())
             {
                 return Enumerable.Empty<DisplayDirector>().ToList();
             }
@@ -109,7 +109,7 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayFilm> MapFilmCollection(IEnumerable<Film> films)
         {
-            if (films == null || films.Any())
+            if (films == null || !films.Any())
             {
                 return Enumerable.Empty<DisplayFilm>().ToList();
             }
@@ -135,7 +135,7 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayFormat> MapFormatCollection(IEnumerable<Format> formats)
         {
-            if (formats == null || formats.Any())
+            if (formats == null || !formats.Any())
             {
                 return Enumerable.Empty<DisplayFormat>().ToList();
             }
