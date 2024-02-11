@@ -5,7 +5,7 @@
         public required int ActorId { get; init; }
         public required string Name { get; init; }
 
-        (bool IsValid, string ErrorMessage) Validate() =>
+        public (bool IsValid, string ErrorMessage) Validate() =>
             ActorId < 1
                 ? (false, "Invalid actor id.")
                 : (string.IsNullOrWhiteSpace(Name) || Name.Length > 255 || Name.Length < 1

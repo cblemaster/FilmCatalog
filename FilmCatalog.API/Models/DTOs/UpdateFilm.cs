@@ -17,7 +17,7 @@ namespace FilmCatalog.API.Models.DTOs
         public required bool IsRareCollectibleAndOrValuable { get; init; }
         public DateTime UpdateDate { get; init; } = DateTime.Now;
 
-        (bool IsValid, string ErrorMessage) Validate()
+        public (bool IsValid, string ErrorMessage) Validate()
         {
             StringBuilder sb = new();
 

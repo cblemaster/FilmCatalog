@@ -66,7 +66,31 @@ app.MapPost("/actor", async Task<Results<BadRequest<string>, Created<DisplayActo
     return TypedResults.Created($"/actor/{actorToCreate.ActorId}", EntityToDTOMappers.MapActor(actorToCreate));
 });
 
-app.MapPut("/actor/{actorId:int}", () => { });
+app.MapPut("/actor/{actorId:int}", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, RenameActor renameActor, int actorId) =>
+{
+    if (renameActor is null)
+    {
+        return TypedResults.BadRequest("No actor to rename provided.");
+    }
+
+    if (actorId < 1 || actorId != renameActor.ActorId)
+    {
+        return TypedResults.BadRequest("Invalid actor id.");
+    }
+    
+    (bool IsValid, string ErrorMessage) = renameActor.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Actor actorToUpdate = DTOToEntityMappers.MapRenameActor(renameActor);
+    context.Actors.Entry(actorToUpdate).State = EntityState.Modified;
+    await context.SaveChangesAsync();
+
+    return TypedResults.NoContent();
+});
 
 app.MapDelete("/actor/{actorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int actorId) =>
 {
@@ -208,7 +232,31 @@ app.MapPost("/director", async Task<Results<BadRequest<string>, Created<DisplayD
     return TypedResults.Created($"/director/{directorToCreate.DirectorId}", EntityToDTOMappers.MapDirector(directorToCreate));
 });
 
-app.MapPut("/director/{directorId:int}", () => { });
+app.MapPut("/director/{directorId:int}", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, RenameDirector renameDirector, int directorId) =>
+{
+    if (renameDirector is null)
+    {
+        return TypedResults.BadRequest("No director to rename provided.");
+    }
+
+    if (directorId < 1 || directorId != renameDirector.DirectorId)
+    {
+        return TypedResults.BadRequest("Invalid director id.");
+    }
+
+    (bool IsValid, string ErrorMessage) = renameDirector.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Director directorToUpdate = DTOToEntityMappers.MapRenameDirector(renameDirector);
+    context.Directors.Entry(directorToUpdate).State = EntityState.Modified;
+    await context.SaveChangesAsync();
+
+    return TypedResults.NoContent();
+});
 
 app.MapDelete("/director/{directorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int directorId) =>
 {
@@ -310,7 +358,32 @@ app.MapPost("/film", async Task<Results<BadRequest<string>, Created<DisplayFilm>
     return TypedResults.Created($"/film/{filmToCreate.FilmId}", EntityToDTOMappers.MapFilm(filmToCreate));
 });
 
-app.MapPut("/film/{filmId:int}", () => { });
+app.MapPut("/film/{filmId:int}", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, UpdateFilm updateFilm, int filmId) =>
+{
+    if (updateFilm is null)
+    {
+        return TypedResults.BadRequest("No film to update provided.");
+    }
+
+    if (filmId < 1 || filmId != updateFilm.FilmId)
+    {
+        return TypedResults.BadRequest("Invalid film id.");
+    }
+
+    (bool IsValid, string ErrorMessage) = updateFilm.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Film filmToUpdate = DTOToEntityMappers.MapUpdateFilm(updateFilm);
+    context.Films.Entry(filmToUpdate).State = EntityState.Modified;
+    await context.SaveChangesAsync();
+
+    return TypedResults.NoContent();
+});
+
 app.MapPut("/film/{filmId:int}/actor", () => { });
 app.MapPut("/film/{filmId:int}/categoty", () => { });
 

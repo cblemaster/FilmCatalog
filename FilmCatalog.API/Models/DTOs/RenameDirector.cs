@@ -5,7 +5,7 @@
         public required int DirectorId { get; init; }
         public required string Name { get; init; }
 
-        (bool IsValid, string ErrorMessage) Validate() =>
+        public (bool IsValid, string ErrorMessage) Validate() =>
             DirectorId < 1
                 ? (false, "Invalid director id.")
                 : (string.IsNullOrWhiteSpace(Name) || Name.Length > 255 || Name.Length < 1
