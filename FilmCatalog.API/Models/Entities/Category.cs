@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FilmCatalog.API.Models.Entities;
+﻿namespace FilmCatalog.API.Models.Entities;
 
 public partial class Category
 {

@@ -4,18 +4,18 @@ namespace FilmCatalog.API.Models.Entities
 {
     public partial class Film
     {
-        private bool HasActors => Actors.Any();
-        
-        private bool HasCategories => Categories.Any();
+        private bool HasActors => Actors.Count != 0;
 
-        public int ActorCount => HasActors ? Actors.Count() : 0;
+        private bool HasCategories => Categories.Count != 0;
 
-        public int CategoryCount => HasCategories ? Categories.Count() : 0;
+        public int ActorCount => HasActors ? Actors.Count : 0;
+
+        public int CategoryCount => HasCategories ? Categories.Count : 0;
 
         (bool IsValid, string ErrorMessage) Validate()
         {
-            StringBuilder sb = new();            
-            
+            StringBuilder sb = new();
+
             if (string.IsNullOrWhiteSpace(Title) || Title.Length > 255 || Title.Length < 1)
             {
                 AppendToStringBuilder("Film title must be between 1 and 255 characters.");

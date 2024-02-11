@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FilmCatalog.API.Models.Entities;
+﻿using FilmCatalog.API.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace FilmCatalog.API.Context;
