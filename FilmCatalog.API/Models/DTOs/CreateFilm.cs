@@ -28,6 +28,10 @@ namespace FilmCatalog.API.Models.DTOs
             {
                 AppendToStringBuilder("Max length for film description is 255 characters.");
             }
+            if (FormatId < 1)
+            {
+                AppendToStringBuilder("Invalid format id for film.");
+            }
             if (!string.IsNullOrWhiteSpace(Studio) && Studio.Length > 255)
             {
                 AppendToStringBuilder("Max length for film studio is 255 characters.");
@@ -41,7 +45,7 @@ namespace FilmCatalog.API.Models.DTOs
                 AppendToStringBuilder("If you provide a star rating for a film, it must be between zero and five.");
             }
 
-            return (sb.Length > 0, sb.ToString());
+            return (sb.Length == 0, sb.ToString());
 
             void AppendToStringBuilder(string error)
             {
