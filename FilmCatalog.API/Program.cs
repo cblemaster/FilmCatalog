@@ -45,8 +45,29 @@ app.MapGet("/actor", Results<Ok<IEnumerable<DisplayActor>>, NotFound<string>> (F
     return TypedResults.NotFound("No actors found.");
 });
 
-app.MapPost("/actor", () => { });
+app.MapPost("/actor", async Task<Results<BadRequest<string>, Created<DisplayActor>>> (FilmCatalogContext context, CreateActor createActor) =>
+{
+    if (createActor is null)
+    {
+        return TypedResults.BadRequest("No actor to create provided.");
+    }
+
+    (bool IsValid, string ErrorMessage) = createActor.Validate();
+    
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Actor actorToCreate = DTOToEntityMappers.MapCreateActor(createActor);
+    context.Actors.Add(actorToCreate);
+    await context.SaveChangesAsync();
+
+    return TypedResults.Created($"/actor/{actorToCreate.ActorId}", EntityToDTOMappers.MapActor(actorToCreate));
+});
+
 app.MapPut("/actor/{actorId:int}", () => { });
+
 app.MapDelete("/actor/{actorId:int}", () => { });
 #endregion
 
@@ -75,7 +96,27 @@ app.MapGet("/category", Results<Ok<IEnumerable<DisplayCategory>>, NotFound<strin
     return TypedResults.NotFound("No categories found.");
 });
 
-app.MapPost("/category", () => { });
+app.MapPost("/category", async Task<Results<BadRequest<string>, Created<DisplayCategory>>> (FilmCatalogContext context, CreateCategory createCategory) =>
+{
+    if (createCategory is null)
+    {
+        return TypedResults.BadRequest("No category to create provided.");
+    }
+
+    (bool IsValid, string ErrorMessage) = createCategory.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Category categoryToCreate = DTOToEntityMappers.MapCreateCategory(createCategory);
+    context.Categories.Add(categoryToCreate);
+    await context.SaveChangesAsync();
+
+    return TypedResults.Created($"/category/{categoryToCreate.CategoryId}", EntityToDTOMappers.MapCategory(categoryToCreate));
+});
+
 app.MapDelete("/category/{categoryId:int}", () => { });
 #endregion
 
@@ -104,7 +145,27 @@ app.MapGet("/director", Results<Ok<IEnumerable<DisplayDirector>>, NotFound<strin
     return TypedResults.NotFound("No directors found.");
 });
 
-app.MapPost("/director", () => { });
+app.MapPost("/director", async Task<Results<BadRequest<string>, Created<DisplayDirector>>> (FilmCatalogContext context, CreateDirector createDirector) =>
+{
+    if (createDirector is null)
+    {
+        return TypedResults.BadRequest("No director to create provided.");
+    }
+
+    (bool IsValid, string ErrorMessage) = createDirector.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Director directorToCreate = DTOToEntityMappers.MapCreateDirector(createDirector);
+    context.Directors.Add(directorToCreate);
+    await context.SaveChangesAsync();
+
+    return TypedResults.Created($"/director/{directorToCreate.DirectorId}", EntityToDTOMappers.MapDirector(directorToCreate));
+});
+
 app.MapPut("/director/{directorId:int}", () => { });
 app.MapDelete("/director/{directorId:int}", () => { });
 #endregion
@@ -164,7 +225,27 @@ app.MapGet("/film/fivestar", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<stri
     return TypedResults.NotFound("No rare, collectible, nor valuable films found.");
 });
 
-app.MapPost("/film", () => { });
+app.MapPost("/film", async Task<Results<BadRequest<string>, Created<DisplayFilm>>> (FilmCatalogContext context, CreateFilm createFilm) =>
+{
+    if (createFilm is null)
+    {
+        return TypedResults.BadRequest("No film to create provided.");
+    }
+
+    (bool IsValid, string ErrorMessage) = createFilm.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Film filmToCreate = DTOToEntityMappers.MapCreateFilm(createFilm);
+    context.Films.Add(filmToCreate);
+    await context.SaveChangesAsync();
+
+    return TypedResults.Created($"/film/{filmToCreate.FilmId}", EntityToDTOMappers.MapFilm(filmToCreate));
+});
+
 app.MapPut("/film/{filmId:int}", () => { });
 app.MapPut("/film/{filmId:int}/actor", () => { });
 app.MapPut("/film/{filmId:int}/categoty", () => { });
@@ -196,7 +277,27 @@ app.MapGet("/format", Results<Ok<IEnumerable<DisplayFormat>>, NotFound<string>> 
     return TypedResults.NotFound("No formats found.");
 });
 
-app.MapPost("/format", () => { });
+app.MapPost("/format", async Task<Results<BadRequest<string>, Created<DisplayFormat>>> (FilmCatalogContext context, CreateFormat createFormat) =>
+{
+    if (createFormat is null)
+    {
+        return TypedResults.BadRequest("No format to create provided.");
+    }
+
+    (bool IsValid, string ErrorMessage) = createFormat.Validate();
+
+    if (!IsValid)
+    {
+        return TypedResults.BadRequest(ErrorMessage);
+    }
+
+    Format formatToCreate = DTOToEntityMappers.MapCreateFormat(createFormat);
+    context.Formats.Add(formatToCreate);
+    await context.SaveChangesAsync();
+
+    return TypedResults.Created($"/format/{formatToCreate.FormatId}", EntityToDTOMappers.MapFormat(formatToCreate));
+});
+
 app.MapDelete("/format/{formatId:int}", () => { });
 #endregion
 
