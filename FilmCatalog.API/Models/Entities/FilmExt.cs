@@ -45,5 +45,26 @@ namespace FilmCatalog.API.Models.Entities
                 sb.Append(error);
             }
         }
+
+        public static Film NotFound => new()
+        {
+            FilmId = 0,
+            Title = "not found",
+            Description = null,
+            DirectorId = null,
+            FormatId = 0,
+            Quantity = 0,
+            Year = null,
+            Studio = null,
+            StarRating = null,
+            IsFavorite = false,
+            IsRareCollectibleAndOrValuable = false,
+            CreateDate = DateTime.MinValue,
+            UpdateDate = null,
+            Director = null,
+            Format = null!,
+            Categories = [],
+            Actors = [],
+        };
     }
 }

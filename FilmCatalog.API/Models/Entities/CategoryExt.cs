@@ -6,5 +6,12 @@
             string.IsNullOrWhiteSpace(CategoryName) || CategoryName.Length > 255 || CategoryName.Length < 1
                 ? (false, "Category name must be between 1 and 255 characters.")
                 : (true, string.Empty);
+
+        public static Category NotFound => new()
+        {
+            CategoryId = 0,
+            CategoryName = "not found",
+            Films = [],
+        };
     }
 }
