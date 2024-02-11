@@ -68,7 +68,28 @@ app.MapPost("/actor", async Task<Results<BadRequest<string>, Created<DisplayActo
 
 app.MapPut("/actor/{actorId:int}", () => { });
 
-app.MapDelete("/actor/{actorId:int}", () => { });
+app.MapDelete("/actor/{actorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int actorId) =>
+{
+    if (actorId < 1)
+    {
+        return TypedResults.BadRequest("Invalid actor id.");
+    }
+
+    if (await context.Actors.Include(c => c.Films).SingleOrDefaultAsync(a => a.ActorId == actorId) is Actor actor)
+    {
+        if (actor.Films.Any())
+        {
+            return TypedResults.BadRequest("Unable to delete actor because s/he is associated with one or more films.");
+        }
+
+        context.Actors.Remove(actor);
+        await context.SaveChangesAsync();
+
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Unable to find actor to delete.");
+});
 #endregion
 
 #region category endpoints
@@ -117,7 +138,28 @@ app.MapPost("/category", async Task<Results<BadRequest<string>, Created<DisplayC
     return TypedResults.Created($"/category/{categoryToCreate.CategoryId}", EntityToDTOMappers.MapCategory(categoryToCreate));
 });
 
-app.MapDelete("/category/{categoryId:int}", () => { });
+app.MapDelete("/category/{categoryId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int categoryId) =>
+{
+    if (categoryId < 1)
+    {
+        return TypedResults.BadRequest("Invalid category id.");
+    }
+
+    if (await context.Categories.Include(c => c.Films).SingleOrDefaultAsync(c => c.CategoryId == categoryId) is Category category)
+    {
+        if (category.Films.Any())
+        {
+            return TypedResults.BadRequest("Unable to delete category because it is associated with one or more films.");
+        }        
+        
+        context.Categories.Remove(category);
+        await context.SaveChangesAsync();
+
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Unable to find category to delete.");
+});
 #endregion
 
 #region director endpoints
@@ -167,7 +209,29 @@ app.MapPost("/director", async Task<Results<BadRequest<string>, Created<DisplayD
 });
 
 app.MapPut("/director/{directorId:int}", () => { });
-app.MapDelete("/director/{directorId:int}", () => { });
+
+app.MapDelete("/director/{directorId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int directorId) =>
+{
+    if (directorId < 1)
+    {
+        return TypedResults.BadRequest("Invalid director id.");
+    }
+
+    if (await context.Directors.Include(c => c.Films).SingleOrDefaultAsync(d => d.DirectorId == directorId) is Director director)
+    {
+        if (director.Films.Any())
+        {
+            return TypedResults.BadRequest("Unable to delete director because s/he is associated with one or more films.");
+        }
+
+        context.Directors.Remove(director);
+        await context.SaveChangesAsync();
+
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Unable to find director to delete.");
+});
 #endregion
 
 #region film endpoints
@@ -249,7 +313,24 @@ app.MapPost("/film", async Task<Results<BadRequest<string>, Created<DisplayFilm>
 app.MapPut("/film/{filmId:int}", () => { });
 app.MapPut("/film/{filmId:int}/actor", () => { });
 app.MapPut("/film/{filmId:int}/categoty", () => { });
-app.MapDelete("/film/{filmId:int}", () => { });
+
+app.MapDelete("/film/{filmId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int filmId) =>
+{
+    if (filmId < 1)
+    {
+        return TypedResults.BadRequest("Invalid film id.");
+    }
+
+    if (await context.Films.IgnoreAutoIncludes().SingleOrDefaultAsync(f => f.FilmId == filmId) is Film film)
+    {
+        context.Films.Remove(film);
+        await context.SaveChangesAsync();
+
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Unable to find film to delete.");
+});
 #endregion
 
 #region format endpoints
@@ -298,7 +379,28 @@ app.MapPost("/format", async Task<Results<BadRequest<string>, Created<DisplayFor
     return TypedResults.Created($"/format/{formatToCreate.FormatId}", EntityToDTOMappers.MapFormat(formatToCreate));
 });
 
-app.MapDelete("/format/{formatId:int}", () => { });
+app.MapDelete("/format/{formatId:int}", async Task<Results<BadRequest<string>, NoContent, NotFound<string>>> (FilmCatalogContext context, int formatId) =>
+{
+    if (formatId < 1)
+    {
+        return TypedResults.BadRequest("Invalid format id.");
+    }
+
+    if (await context.Formats.Include(f => f.Films).SingleOrDefaultAsync(f => f.FormatId == formatId) is Format format)
+    {
+        if (format.Films.Any())
+        {
+            return TypedResults.BadRequest("Unable to delete format because it is associated with one or more films.");
+        }
+
+        context.Formats.Remove(format);
+        await context.SaveChangesAsync();
+
+        return TypedResults.NoContent();
+    }
+
+    return TypedResults.NotFound("Unable to find format to delete.");
+});
 #endregion
 
 app.Run();

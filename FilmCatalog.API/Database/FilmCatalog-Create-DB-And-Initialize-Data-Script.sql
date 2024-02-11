@@ -186,8 +186,8 @@ CREATE TABLE FilmsCategories (
 	FilmId				int									NOT NULL,
 	CategoryId			int									NOT NULL,
 	CONSTRAINT PK_FilmsCategories PRIMARY KEY CLUSTERED(FilmId, CategoryId),
-	CONSTRAINT FK_FilmsCategories_Films FOREIGN KEY(FilmId) REFERENCES Films(FilmId),
-	CONSTRAINT FK_FilmsCategories_Categories FOREIGN KEY(CategoryId) REFERENCES Categories(CategoryId),
+	CONSTRAINT FK_FilmsCategories_Films FOREIGN KEY(FilmId) REFERENCES Films(FilmId) ON DELETE CASCADE,
+	CONSTRAINT FK_FilmsCategories_Categories FOREIGN KEY(CategoryId) REFERENCES Categories(CategoryId) ON DELETE CASCADE,
 )
 GO
 
@@ -213,8 +213,8 @@ CREATE TABLE FilmsActors (
 	FilmId				int									NOT NULL,
 	ActorId				int									NOT NULL,
 	CONSTRAINT PK_FilmsActors PRIMARY KEY CLUSTERED(FilmId, ActorId),
-	CONSTRAINT FK_FilmsActors_Films FOREIGN KEY(FilmId) REFERENCES Films(FilmId),
-	CONSTRAINT FK_FilmsActors_Actors FOREIGN KEY(ActorId) REFERENCES Actors(ActorId),
+	CONSTRAINT FK_FilmsActors_Films FOREIGN KEY(FilmId) REFERENCES Films(FilmId) ON DELETE CASCADE,
+	CONSTRAINT FK_FilmsActors_Actors FOREIGN KEY(ActorId) REFERENCES Actors(ActorId) ON DELETE CASCADE,
 )
 GO
 
