@@ -16,12 +16,12 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayActor> MapActorCollection(IEnumerable<Actor> actors)
         {
-            if (actors == null || actors.Count() == 0)
+            if (actors == null || actors.Any())
             {
                 return Enumerable.Empty<DisplayActor>().ToList();
             }
 
-            List<DisplayActor> result = new();
+            List<DisplayActor> result = [];
 
             foreach (Actor actor in actors)
             {
@@ -42,12 +42,12 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayCategory> MapCategoryCollection(IEnumerable<Category> categories)
         {
-            if (categories == null || categories.Count() == 0)
+            if (categories == null || categories.Any())
             {
                 return Enumerable.Empty<DisplayCategory>().ToList();
             }
 
-            List<DisplayCategory> result = new();
+            List<DisplayCategory> result = [];
 
             foreach (Category category in categories)
             {
@@ -68,12 +68,12 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayDirector> MapDirectorCollection(IEnumerable<Director> directors)
         {
-            if (directors == null || directors.Count() == 0)
+            if (directors == null || directors.Any())
             {
                 return Enumerable.Empty<DisplayDirector>().ToList();
             }
 
-            List<DisplayDirector> result = new();
+            List<DisplayDirector> result = [];
 
             foreach (Director director in directors)
             {
@@ -102,19 +102,19 @@ namespace FilmCatalog.API.Models.Mappers
                     CreateDate = film.CreateDate,
                     UpdateDate = film.UpdateDate,
                     Format = MapFormat(film.Format),
-                    Director = film.Director == null? null : MapDirector(film.Director),
+                    Director = film.Director == null ? null : MapDirector(film.Director),
                     Actors = MapActorCollection(film.Actors),
                     Categories = MapCategoryCollection(film.Categories),
                 };
 
         public static IEnumerable<DisplayFilm> MapFilmCollection(IEnumerable<Film> films)
         {
-            if (films == null || films.Count() == 0)
+            if (films == null || films.Any())
             {
                 return Enumerable.Empty<DisplayFilm>().ToList();
             }
 
-            List<DisplayFilm> result = new();
+            List<DisplayFilm> result = [];
 
             foreach (Film film in films)
             {
@@ -135,12 +135,12 @@ namespace FilmCatalog.API.Models.Mappers
 
         public static IEnumerable<DisplayFormat> MapFormatCollection(IEnumerable<Format> formats)
         {
-            if (formats == null || formats.Count() == 0)
+            if (formats == null || formats.Any())
             {
                 return Enumerable.Empty<DisplayFormat>().ToList();
             }
 
-            List<DisplayFormat> result = new();
+            List<DisplayFormat> result = [];
 
             foreach (Format format in formats)
             {

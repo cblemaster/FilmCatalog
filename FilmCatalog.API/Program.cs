@@ -27,7 +27,7 @@ app.MapGet("/actor/{actorId:int}", async Task<Results<BadRequest<string>, Ok<Dis
     {
         return TypedResults.BadRequest("Invalid actor id.");
     }
-    if (await context.Actors.SingleOrDefaultAsync(a => a.ActorId == actorId) is Actor actor) 
+    if (await context.Actors.SingleOrDefaultAsync(a => a.ActorId == actorId) is Actor actor)
     {
         DisplayActor displayActor = EntityToDTOMappers.MapActor(actor);
         return TypedResults.Ok(displayActor);
@@ -35,9 +35,9 @@ app.MapGet("/actor/{actorId:int}", async Task<Results<BadRequest<string>, Ok<Dis
     return TypedResults.NotFound($"No actor with actor id {actorId} found.");
 });
 
-app.MapGet("/actor", async Task<Results<Ok<IEnumerable<DisplayActor>>, NotFound<string>>> (FilmCatalogContext context) =>
+app.MapGet("/actor", Results<Ok<IEnumerable<DisplayActor>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Actors is IEnumerable<Actor> actors && actors.Count() > 0)
+    if (context.Actors is IEnumerable<Actor> actors && actors.Any())
     {
         IEnumerable<DisplayActor> displayActors = EntityToDTOMappers.MapActorCollection(actors);
         return TypedResults.Ok(displayActors);
@@ -65,9 +65,9 @@ app.MapGet("/category/{categoryId:int}", async Task<Results<BadRequest<string>, 
     return TypedResults.NotFound($"No category with category id {categoryId} found.");
 });
 
-app.MapGet("/category",async Task<Results<Ok<IEnumerable<DisplayCategory>>, NotFound<string>>> (FilmCatalogContext context) =>
+app.MapGet("/category", Results<Ok<IEnumerable<DisplayCategory>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Categories is IEnumerable<Category> categories && categories.Count() > 0)
+    if (context.Categories is IEnumerable<Category> categories && categories.Any())
     {
         IEnumerable<DisplayCategory> displayCategories = EntityToDTOMappers.MapCategoryCollection(categories);
         return TypedResults.Ok(displayCategories);
@@ -94,9 +94,9 @@ app.MapGet("/director/{directorId:int}", async Task<Results<BadRequest<string>, 
     return TypedResults.NotFound($"No director with director id {directorId} found.");
 });
 
-app.MapGet("/director", async Task<Results<Ok<IEnumerable<DisplayDirector>>, NotFound<string>>> (FilmCatalogContext context) =>
+app.MapGet("/director", Results<Ok<IEnumerable<DisplayDirector>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Directors is IEnumerable<Director> directors && directors.Count() > 0)
+    if (context.Directors is IEnumerable<Director> directors && directors.Any())
     {
         IEnumerable<DisplayDirector> displayDirectors = EntityToDTOMappers.MapDirectorCollection(directors);
         return TypedResults.Ok(displayDirectors);
@@ -126,7 +126,7 @@ app.MapGet("/film/{filmId:int}", async Task<Results<BadRequest<string>, Ok<Displ
 
 app.MapGet("/film", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Films is IEnumerable<Film> films && films.Count() > 0)
+    if (context.Films is IEnumerable<Film> films && films.Any())
     {
         IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
         return TypedResults.Ok(displayFilms);
@@ -136,7 +136,7 @@ app.MapGet("/film", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (Fil
 
 app.MapGet("/film/favorite", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Films.Where(f => f.IsFavorite) is IEnumerable<Film> films && films.Count() > 0)
+    if (context.Films.Where(f => f.IsFavorite) is IEnumerable<Film> films && films.Any())
     {
         IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
         return TypedResults.Ok(displayFilms);
@@ -146,7 +146,7 @@ app.MapGet("/film/favorite", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<stri
 
 app.MapGet("/film/rare", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Films.Where(f => f.IsRareCollectibleAndOrValuable) is IEnumerable<Film> films && films.Count() > 0)
+    if (context.Films.Where(f => f.IsRareCollectibleAndOrValuable) is IEnumerable<Film> films && films.Any())
     {
         IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
         return TypedResults.Ok(displayFilms);
@@ -156,7 +156,7 @@ app.MapGet("/film/rare", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>>
 
 app.MapGet("/film/fivestar", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Films.Where(f => f.StarRating == 5) is IEnumerable<Film> films && films.Count() > 0)
+    if (context.Films.Where(f => f.StarRating == 5) is IEnumerable<Film> films && films.Any())
     {
         IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
         return TypedResults.Ok(displayFilms);
@@ -186,9 +186,9 @@ app.MapGet("/format/{formatId:int}", async Task<Results<BadRequest<string>, Ok<D
     return TypedResults.NotFound($"No format with format id {formatId} found.");
 });
 
-app.MapGet("/format", async Task<Results<Ok<IEnumerable<DisplayFormat>>, NotFound<string>>> (FilmCatalogContext context) =>
+app.MapGet("/format", Results<Ok<IEnumerable<DisplayFormat>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Formats is IEnumerable<Format> formats && formats.Count() > 0)
+    if (context.Formats is IEnumerable<Format> formats && formats.Any())
     {
         IEnumerable<DisplayFormat> displayFormats = EntityToDTOMappers.MapFormatCollection(formats);
         return TypedResults.Ok(displayFormats);
