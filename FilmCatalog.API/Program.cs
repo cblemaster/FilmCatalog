@@ -110,11 +110,60 @@ app.MapDelete("/director/{directorId:int}", () => { });
 #endregion
 
 #region film endpoints
-app.MapGet("/film/{filmId:int}", () => { });
-app.MapGet("/film", () => { });
-app.MapGet("/film/favorite", () => { });
-app.MapGet("/film/rare", () => { });
-app.MapGet("/film/fivestar", () => { });
+app.MapGet("/film/{filmId:int}", async Task<Results<BadRequest<string>, Ok<DisplayFilm>, NotFound<string>>> (FilmCatalogContext context, int filmId) =>
+{
+    if (filmId < 1)
+    {
+        return TypedResults.BadRequest("Invalid film id.");
+    }
+    if (await context.Films.SingleOrDefaultAsync(f => f.FilmId == filmId) is Film film)
+    {
+        DisplayFilm displayFilm = EntityToDTOMappers.MapFilm(film);
+        return TypedResults.Ok(displayFilm);
+    }
+    return TypedResults.NotFound($"No film with film id {filmId} found.");
+});
+
+app.MapGet("/film", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
+{
+    if (context.Films is IEnumerable<Film> films && films.Count() > 0)
+    {
+        IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
+        return TypedResults.Ok(displayFilms);
+    }
+    return TypedResults.NotFound("No films found.");
+});
+
+app.MapGet("/film/favorite", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
+{
+    if (context.Films.Where(f => f.IsFavorite) is IEnumerable<Film> films && films.Count() > 0)
+    {
+        IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
+        return TypedResults.Ok(displayFilms);
+    }
+    return TypedResults.NotFound("No favorite films found.");
+});
+
+app.MapGet("/film/rare", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
+{
+    if (context.Films.Where(f => f.IsRareCollectibleAndOrValuable) is IEnumerable<Film> films && films.Count() > 0)
+    {
+        IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
+        return TypedResults.Ok(displayFilms);
+    }
+    return TypedResults.NotFound("No rare, collectible, nor valuable films found.");
+});
+
+app.MapGet("/film/fivestar", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<string>> (FilmCatalogContext context) =>
+{
+    if (context.Films.Where(f => f.StarRating == 5) is IEnumerable<Film> films && films.Count() > 0)
+    {
+        IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
+        return TypedResults.Ok(displayFilms);
+    }
+    return TypedResults.NotFound("No rare, collectible, nor valuable films found.");
+});
+
 app.MapPost("/film", () => { });
 app.MapPut("/film/{filmId:int}", () => { });
 app.MapPut("/film/{filmId:int}/actor", () => { });
