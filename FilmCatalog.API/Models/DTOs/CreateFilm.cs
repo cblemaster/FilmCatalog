@@ -14,7 +14,7 @@ namespace FilmCatalog.API.Models.DTOs
         public int? StarRating { get; init; }
         public required bool IsFavorite { get; init; }
         public required bool IsRareCollectibleAndOrValuable { get; init; }
-        public required DateTime CreateDate { get; init; } = DateTime.Now;
+        public required DateTime CreateDate { get; init; }
 
         public (bool IsValid, string ErrorMessage) Validate()
         {

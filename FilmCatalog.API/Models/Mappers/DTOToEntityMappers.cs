@@ -44,7 +44,7 @@ namespace FilmCatalog.API.Models.Mappers
                     IsFavorite = createFilm.IsFavorite,
                     IsRareCollectibleAndOrValuable = createFilm.IsRareCollectibleAndOrValuable,
                     StarRating = createFilm.StarRating,
-                    CreateDate = createFilm.CreateDate,
+                    CreateDate = DateTime.Now,
                 };
 
         public static Format MapCreateFormat(CreateFormat createFormat) =>
