@@ -19,7 +19,7 @@
 - Directors: Create, Rename, Delete*, View, View all
 - Films: Create, Update, Delete, View, View all, View favorites, View rare or collectible, View five-star rated, assign actors, assign categories
 - Formats: Create, Delete*, ViewWithFilms, ViewAllWithFilms
-* Can delete only if not associated with any film(s)
+/* Can delete only if not associated with any film(s)
 
 ## Business rules:
 ## UI conventions:
