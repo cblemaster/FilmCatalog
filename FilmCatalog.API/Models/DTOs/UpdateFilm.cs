@@ -25,7 +25,7 @@ namespace FilmCatalog.API.Models.DTOs
             {
                 AppendToStringBuilder("Invalid film id.");
             }
-            
+
             if (string.IsNullOrWhiteSpace(Title) || Title.Length > 255 || Title.Length < 1)
             {
                 AppendToStringBuilder("Film title must be between 1 and 255 characters.");

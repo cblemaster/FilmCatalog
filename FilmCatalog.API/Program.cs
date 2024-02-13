@@ -53,7 +53,7 @@ app.MapPost("/actor", async Task<Results<BadRequest<string>, Created<DisplayActo
     }
 
     (bool IsValid, string ErrorMessage) = createActor.Validate();
-    
+
     if (!IsValid)
     {
         return TypedResults.BadRequest(ErrorMessage);
@@ -77,7 +77,7 @@ app.MapPut("/actor/{actorId:int}", async Task<Results<BadRequest<string>, NoCont
     {
         return TypedResults.BadRequest("Invalid actor id.");
     }
-    
+
     (bool IsValid, string ErrorMessage) = renameActor.Validate();
 
     if (!IsValid)
@@ -174,8 +174,8 @@ app.MapDelete("/category/{categoryId:int}", async Task<Results<BadRequest<string
         if (category.Films.Any())
         {
             return TypedResults.BadRequest("Unable to delete category because it is associated with one or more films.");
-        }        
-        
+        }
+
         context.Categories.Remove(category);
         await context.SaveChangesAsync();
 
@@ -384,10 +384,6 @@ app.MapPut("/film/{filmId:int}", async Task<Results<BadRequest<string>, NoConten
 
         return TypedResults.NoContent();
     }
-
-    //Film filmToUpdate = DTOToEntityMappers.MapUpdateFilm(updateFilm);
-    //context.Films.Entry(filmToUpdate).State = EntityState.Modified;
-    //await context.SaveChangesAsync();
 
     return TypedResults.BadRequest("Unable to find film to update.");
 });

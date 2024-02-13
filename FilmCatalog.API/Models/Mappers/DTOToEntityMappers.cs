@@ -79,7 +79,7 @@ namespace FilmCatalog.API.Models.Mappers
             {
                 return filmToUpdate;
             }
-            
+
             filmToUpdate.Title = updateFilm.Title;
             filmToUpdate.Description = updateFilm.Description;
             filmToUpdate.FormatId = updateFilm.FormatId;
