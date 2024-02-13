@@ -73,23 +73,27 @@ namespace FilmCatalog.API.Models.Mappers
                     Name = renameDirector.Name,
                 };
 
-        public static Film MapUpdateFilm(UpdateFilm updateFilm) =>
-            updateFilm == null
-                ? Film.NotFound
-                : new()
-                {
-                    FilmId = updateFilm.FilmId,
-                    Title = updateFilm.Title,
-                    Description = updateFilm.Description,
-                    FormatId = updateFilm.FormatId,
-                    DirectorId = updateFilm.DirectorId,
-                    Quantity = updateFilm.Quantity,
-                    Year = updateFilm.Year,
-                    Studio = updateFilm.Studio,
-                    StarRating = updateFilm.StarRating,
-                    IsFavorite = updateFilm.IsFavorite,
-                    IsRareCollectibleAndOrValuable = updateFilm.IsRareCollectibleAndOrValuable,
-                    UpdateDate = updateFilm.UpdateDate,
-                };
+        public static Film MapUpdateFilm(Film filmToUpdate, UpdateFilm updateFilm)
+        {
+            if (updateFilm is null)
+            {
+                return filmToUpdate;
+            }
+            
+            filmToUpdate.Title = updateFilm.Title;
+            filmToUpdate.Description = updateFilm.Description;
+            filmToUpdate.FormatId = updateFilm.FormatId;
+            filmToUpdate.DirectorId = updateFilm.DirectorId;
+            filmToUpdate.Quantity = updateFilm.Quantity;
+            filmToUpdate.Year = updateFilm.Year;
+            filmToUpdate.Studio = updateFilm.Studio;
+            filmToUpdate.StarRating = updateFilm.StarRating;
+            filmToUpdate.IsFavorite = updateFilm.IsFavorite;
+            filmToUpdate.IsRareCollectibleAndOrValuable = updateFilm.IsRareCollectibleAndOrValuable;
+            filmToUpdate.UpdateDate = DateTime.Now;
+
+            return filmToUpdate;
+
+        }
     }
 }

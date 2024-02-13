@@ -377,11 +377,19 @@ app.MapPut("/film/{filmId:int}", async Task<Results<BadRequest<string>, NoConten
         return TypedResults.BadRequest(ErrorMessage);
     }
 
-    Film filmToUpdate = DTOToEntityMappers.MapUpdateFilm(updateFilm);
-    context.Films.Entry(filmToUpdate).State = EntityState.Modified;
-    await context.SaveChangesAsync();
+    if (await context.Films.IgnoreAutoIncludes().SingleOrDefaultAsync(f => f.FilmId == filmId) is Film filmToUpdate)
+    {
+        filmToUpdate = DTOToEntityMappers.MapUpdateFilm(filmToUpdate, updateFilm);
+        await context.SaveChangesAsync();
 
-    return TypedResults.NoContent();
+        return TypedResults.NoContent();
+    }
+
+    //Film filmToUpdate = DTOToEntityMappers.MapUpdateFilm(updateFilm);
+    //context.Films.Entry(filmToUpdate).State = EntityState.Modified;
+    //await context.SaveChangesAsync();
+
+    return TypedResults.BadRequest("Unable to find film to update.");
 });
 
 app.MapPut("/film/{filmId:int}/actor", () => { });

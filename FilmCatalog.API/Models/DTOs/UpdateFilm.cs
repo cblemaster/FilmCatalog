@@ -15,7 +15,7 @@ namespace FilmCatalog.API.Models.DTOs
         public int? StarRating { get; init; }
         public required bool IsFavorite { get; init; }
         public required bool IsRareCollectibleAndOrValuable { get; init; }
-        public DateTime UpdateDate { get; init; } = DateTime.Now;
+        public DateTime UpdateDate { get; init; }
 
         public (bool IsValid, string ErrorMessage) Validate()
         {
@@ -47,7 +47,7 @@ namespace FilmCatalog.API.Models.DTOs
                 AppendToStringBuilder("If you provide a star rating for a film, it must be between zero and five.");
             }
 
-            return (sb.Length > 0, sb.ToString());
+            return (sb.Length == 0, sb.ToString());
 
             void AppendToStringBuilder(string error)
             {
