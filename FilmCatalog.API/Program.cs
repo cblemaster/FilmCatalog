@@ -334,7 +334,7 @@ app.MapGet("/film/fivestar", Results<Ok<IEnumerable<DisplayFilm>>, NotFound<stri
         IEnumerable<DisplayFilm> displayFilms = EntityToDTOMappers.MapFilmCollection(films);
         return TypedResults.Ok(displayFilms);
     }
-    return TypedResults.NotFound("No rare, collectible, nor valuable films found.");
+    return TypedResults.NotFound("No five star-rated films found.");
 });
 
 app.MapPost("/film", async Task<Results<BadRequest<string>, Created<DisplayFilm>>> (FilmCatalogContext context, CreateFilm createFilm) =>
@@ -549,10 +549,4 @@ app.MapDelete("/format/{formatId:int}", async Task<Results<BadRequest<string>, N
 
 app.Run();
 
-/*TODO:
-  1) Code and test the assign categories and assign actors endpoints
-  2) Test all of the API endpoints, all data scenarios
-  3) Add the project documentation
-  4) Start thinking about a UI!
-*/
 

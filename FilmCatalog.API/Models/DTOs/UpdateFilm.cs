@@ -34,6 +34,14 @@ namespace FilmCatalog.API.Models.DTOs
             {
                 AppendToStringBuilder("Max length for film description is 255 characters.");
             }
+            if (FormatId < 1)
+            {
+                AppendToStringBuilder("Invalid format id for film.");
+            }
+            if (DirectorId < 1)
+            {
+                AppendToStringBuilder("Invalid director id for film.");
+            }
             if (!string.IsNullOrWhiteSpace(Studio) && Studio.Length > 255)
             {
                 AppendToStringBuilder("Max length for film studio is 255 characters.");
