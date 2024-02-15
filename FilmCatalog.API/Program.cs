@@ -388,7 +388,7 @@ app.MapPut("/film/{filmId:int}", async Task<Results<BadRequest<string>, NoConten
     return TypedResults.BadRequest("Unable to find film to update.");
 });
 
-app.MapPut("/film/{filmId:int}/actor", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, int filmId, ICollection<DisplayActor> actors) =>
+app.MapPut("/film/{filmId:int}/assignactors", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, int filmId, ICollection<DisplayActor> actors) =>
 {
     if (filmId < 1)
     {
@@ -423,7 +423,7 @@ app.MapPut("/film/{filmId:int}/actor", async Task<Results<BadRequest<string>, No
     return TypedResults.NoContent();
 });
 
-app.MapPut("/film/{filmId:int}/category", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, int filmId, ICollection<DisplayCategory> categories) =>
+app.MapPut("/film/{filmId:int}/assigncategories", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, int filmId, ICollection<DisplayCategory> categories) =>
 {
     if (filmId < 1)
     {
@@ -451,6 +451,68 @@ app.MapPut("/film/{filmId:int}/category", async Task<Results<BadRequest<string>,
             continue;
         }
         filmToUpdate.Categories.Add(categoryEntity);
+    }
+
+    await context.SaveChangesAsync();
+
+    return TypedResults.NoContent();
+});
+
+app.MapPut("/film/{filmId:int}/removeactors", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, int filmId, ICollection<DisplayActor> actors) =>
+{
+    if (filmId < 1)
+    {
+        return TypedResults.BadRequest("Invalid film id.");
+    }
+
+    if (actors is null || !actors.Any())
+    {
+        return TypedResults.BadRequest("No actors provided.");
+    }
+
+    if (await context.Films.IgnoreAutoIncludes().Include(f => f.Actors).SingleOrDefaultAsync(f => f.FilmId == filmId) is not Film filmToUpdate)
+    {
+        return TypedResults.BadRequest("Unable to find film to update.");
+    }
+
+    foreach (DisplayActor actor in actors)
+    {
+        if (await context.Actors.SingleOrDefaultAsync(a => a.ActorId == actor.ActorId) is not Actor actorEntity)
+        {
+            continue;
+        }
+        filmToUpdate.Actors.Remove(actorEntity);
+    }
+
+    await context.SaveChangesAsync();
+
+    return TypedResults.NoContent();
+});
+
+app.MapPut("/film/{filmId:int}/removecategories", async Task<Results<BadRequest<string>, NoContent>> (FilmCatalogContext context, int filmId, ICollection<DisplayCategory> categories) =>
+{
+    if (filmId < 1)
+    {
+        return TypedResults.BadRequest("Invalid film id.");
+    }
+
+    if (categories is null || !categories.Any())
+    {
+        return TypedResults.BadRequest("No categories provided.");
+    }
+
+    if (await context.Films.IgnoreAutoIncludes().Include(f => f.Categories).SingleOrDefaultAsync(f => f.FilmId == filmId) is not Film filmToUpdate)
+    {
+        return TypedResults.BadRequest("Unable to find film to update.");
+    }
+
+    foreach (DisplayCategory category in categories)
+    {
+        if (await context.Categories.SingleOrDefaultAsync(c => c.CategoryId == category.CategoryId) is not Category categoryEntity)
+        {
+            continue;
+        }
+        filmToUpdate.Categories.Remove(categoryEntity);
     }
 
     await context.SaveChangesAsync();

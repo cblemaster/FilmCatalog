@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FilmCatalog.UI.MAUI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace FilmCatalog.UI.MAUI
 {
@@ -13,7 +14,8 @@ namespace FilmCatalog.UI.MAUI
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .Services.AddSingleton<IHttpService, HttpService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
