@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace FilmCatalog.UI.MAUI.Services
 {
-    internal interface IHttpService
+    public interface IHttpService
     {
         void AssignActorsToFilm(int filmId, ICollection<DisplayActor> actors);
         void AssignCategoriesToFilm(int filmId, ICollection<DisplayCategory> categories);

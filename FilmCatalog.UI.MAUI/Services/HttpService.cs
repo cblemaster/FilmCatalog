@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace FilmCatalog.UI.MAUI.Services
 {
-    internal class HttpService : IHttpService
+    public class HttpService : IHttpService
     {
         private readonly HttpClient _client;
         private const string BASE_URI = "https://localhost:7157";
