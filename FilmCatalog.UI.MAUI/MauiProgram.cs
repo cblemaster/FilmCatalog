@@ -1,4 +1,7 @@
-﻿using FilmCatalog.UI.MAUI.Services;
+﻿using CommunityToolkit.Maui;
+using FilmCatalog.UI.MAUI.PageModels;
+using FilmCatalog.UI.MAUI.Pages;
+using FilmCatalog.UI.MAUI.Services;
 using Microsoft.Extensions.Logging;
 
 namespace FilmCatalog.UI.MAUI
@@ -10,6 +13,7 @@ namespace FilmCatalog.UI.MAUI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -18,6 +22,8 @@ namespace FilmCatalog.UI.MAUI
                 .Services
                     .AddSingleton<IHttpService, HttpService>()
                     .AddSingleton<AppShell>()
+                    .AddTransient<ActorsPageModel>()
+                    .AddTransient<ActorsPage>()
                     ;
 
 #if DEBUG
