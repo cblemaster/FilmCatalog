@@ -6,12 +6,14 @@
 - .NET 8 / C# 12
 - SQL Server database
 - API: ASP.NET Core, minimal API, Entity Framework Core 8
-- UI: TBD
+- UI: .NET MAUI (targeting desktop only), CommunityToolkit.Mvvm nuget package
 - Programming techniques:
 	- Asynchronous programming
 	- Dependency injection
 	- Immutable objects and collections
 	- Pattern matching
+	- Nullable reference types
+	- Expression bodied members
 
 ## Features:
 - Actors: Create, Rename, Delete*, View, View all
