@@ -8,7 +8,6 @@
 - API: ASP.NET Core, minimal API, Entity Framework Core 8
 - UI: .NET MAUI (targeting desktop only), CommunityToolkit.Mvvm nuget package
 - Programming techniques:
-	- Ahead of time (AOT) compilation
 	- Null object pattern
 	- Immutable objects and collections
 	- Expression bodied members
