@@ -8,19 +8,21 @@
 - API: ASP.NET Core, minimal API, Entity Framework Core 8
 - UI: .NET MAUI (targeting desktop only), CommunityToolkit.Mvvm nuget package
 - Programming techniques:
-	- Asynchronous programming
-	- Dependency injection
+	- Ahead of time (AOT) compilation
+	- Null object pattern
 	- Immutable objects and collections
+	- Expression bodied members
 	- Pattern matching
 	- Nullable reference types
-	- Expression bodied members
+	- Asynchronous programming
+	- Dependency injection
 
 ## Features:
 - Actors: Create, Rename, Delete*, View, View all
 - Categories: Create, Delete*, View, View all
 - Directors: Create, Rename, Delete*, View, View all
 - Films: Create, Update, Delete, View, View all, View favorites, View rare or collectible, View five-star rated, assign actors, assign categories
-- Formats: Create, Delete*, ViewWithFilms, ViewAllWithFilms
+- Formats: Create, Delete*, View, View all
 /* Can delete only if not associated with any film(s)
 
 ## Business rules:
