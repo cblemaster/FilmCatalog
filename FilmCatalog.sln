@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FilmCatalog.API", "FilmCatalog.API\FilmCatalog.API.csproj", "{EE89B4C0-47A2-4DDF-9AC4-0C9AD91F8295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmCatalog.UI.MAUI", "FilmCatalog.UI.MAUI\FilmCatalog.UI.MAUI.csproj", "{7788C4DE-9EDD-41E9-98DD-A78FB2794497}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilmCatalog.UI.MAUI", "FilmCatalog.UI.MAUI\FilmCatalog.UI.MAUI.csproj", "{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +17,12 @@ Global
 		{EE89B4C0-47A2-4DDF-9AC4-0C9AD91F8295}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE89B4C0-47A2-4DDF-9AC4-0C9AD91F8295}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE89B4C0-47A2-4DDF-9AC4-0C9AD91F8295}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7788C4DE-9EDD-41E9-98DD-A78FB2794497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7788C4DE-9EDD-41E9-98DD-A78FB2794497}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7788C4DE-9EDD-41E9-98DD-A78FB2794497}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{7788C4DE-9EDD-41E9-98DD-A78FB2794497}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7788C4DE-9EDD-41E9-98DD-A78FB2794497}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7788C4DE-9EDD-41E9-98DD-A78FB2794497}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBF2F3A6-18ED-49DD-BCCF-DB393486AFBA}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
