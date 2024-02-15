@@ -37,7 +37,7 @@ app.MapGet("/actor/{actorId:int}", async Task<Results<BadRequest<string>, Ok<Dis
 
 app.MapGet("/actor", Results<Ok<IEnumerable<DisplayActor>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Actors is IEnumerable<Actor> actors && actors.Any())
+    if (context.Actors.OrderBy(a => a.Name) is IEnumerable<Actor> actors && actors.Any())
     {
         IEnumerable<DisplayActor> displayActors = EntityToDTOMappers.MapActorCollection(actors);
         return TypedResults.Ok(displayActors);
