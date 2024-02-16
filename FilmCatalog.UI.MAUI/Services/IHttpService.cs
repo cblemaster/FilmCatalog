@@ -12,13 +12,13 @@ namespace FilmCatalog.UI.MAUI.Services
         Task<DisplayDirector?> CreateDirectorAsync(CreateDirector director);
         Task<DisplayFilm?> CreateFilmAsync(CreateFilm film);
         Task<DisplayFormat?> CreateFormatAsync(CreateFormat format);
-        void DeleteActorAsync(int actorId);
+        Task DeleteActorAsync(int actorId);
         void DeleteCategoryAsync(int categoryId);
         void DeleteDirectorAsync(int directorId);
         void DeleteFilmAsync(int filmId);
         void DeleteFormatAsync(int formatId);
         Task<DisplayActor> GetActorAsync(int actorId);
-        Task<ReadOnlyCollection<DisplayActor?>> GetActorsAsync();
+        Task<ReadOnlyCollection<DisplayActor>> GetActorsAsync();
         Task<DisplayCategory> GetCategoryAsync(int categoryId);
         Task<ReadOnlyCollection<DisplayCategory?>> GetCategoriesAsync();
         Task<DisplayDirector> GetDirectorAsync(int directorId);
@@ -36,7 +36,7 @@ namespace FilmCatalog.UI.MAUI.Services
         Task<ReadOnlyCollection<DisplayFormat?>> GetFormatsAsync();
         void RemoveActorsFromFilmAsync(int filmId, ICollection<DisplayActor> actors);
         void RemoveCategoriesFromFilmAsync(int filmId, ICollection<DisplayCategory> categories);
-        void RenameActorAsync(int actorId, RenameActor actor);
+        Task RenameActorAsync(int actorId, RenameActor actor);
         void RenameDirectorAsync(int directorId, RenameDirector director);
         void UpdateFilmAsync(int filmId, UpdateFilm film);
     }

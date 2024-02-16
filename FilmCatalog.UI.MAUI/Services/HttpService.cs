@@ -125,7 +125,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteActorAsync(int actorId)
+        public async Task DeleteActorAsync(int actorId)
         {
             if (actorId < 1) { return; }
 
@@ -197,14 +197,19 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayActor?>> GetActorsAsync()
+        public async Task<ReadOnlyCollection<DisplayActor>> GetActorsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayActor> noneFound = new List<DisplayActor>() { DisplayActor.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/actor");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayActor?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayActor?> { DisplayActor.NotFound }.AsReadOnly()
-                    : new List<DisplayActor?> { DisplayActor.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayActor?>? actors = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayActor>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return actors is null || !actors.Any(a => a?.GetType() == typeof(DisplayActor)) ? noneFound : actors!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
@@ -451,7 +456,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void RenameActorAsync(int actorId, RenameActor actor)
+        public async Task RenameActorAsync(int actorId, RenameActor actor)
         {
             if (!actor.Validate().IsValid) { return; }
 
