@@ -6,10 +6,11 @@
     xmlns:pages="clr-namespace:FilmCatalog.UI.MAUI.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="Film Catalog">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate pages:ActorsPage}"
-        Route="MainPage" />
-
+    <TabBar>
+        <!--<ShellContent Title="Films" ContentTemplate="{DataTemplate pages:FilmsPage}" Route="Films" />-->
+        <ShellContent Title="Actors" ContentTemplate="{DataTemplate pages:ActorsPage}" Route="Actors" />
+        <ShellContent Title="Categories" ContentTemplate="{DataTemplate pages:CategoriesPage}" Route="Categories" />
+        <ShellContent Title="Directors" ContentTemplate="{DataTemplate pages:DirectorsPage}" Route="Directors" />
+        <ShellContent Title="Formats" ContentTemplate="{DataTemplate pages:FormatsPage}" Route="Formats" />        
+    </TabBar>
 </Shell>

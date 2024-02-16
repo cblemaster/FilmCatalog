@@ -137,7 +137,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteCategoryAsync(int categoryId)
+        public async Task DeleteCategoryAsync(int categoryId)
         {
             if (categoryId < 1) { return; }
 
@@ -149,7 +149,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteDirectorAsync(int directorId)
+        public async Task DeleteDirectorAsync(int directorId)
         {
             if (directorId < 1) { return; }
 
@@ -173,7 +173,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteFormatAsync(int formatId)
+        public async Task DeleteFormatAsync(int formatId)
         {
             if (formatId < 1) { return; }
 
@@ -226,14 +226,19 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayCategory?>> GetCategoriesAsync()
+        public async Task<ReadOnlyCollection<DisplayCategory>> GetCategoriesAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayCategory> noneFound = new List<DisplayCategory>() { DisplayCategory.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/category");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayCategory?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayCategory?> { DisplayCategory.NotFound }.AsReadOnly()
-                    : new List<DisplayCategory?> { DisplayCategory.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayCategory?>? categories = response.Content.ReadFromJsonAsAsyncEnumerable< DisplayCategory>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return categories is null || !categories.Any(a => a?.GetType() == typeof(DisplayCategory)) ? noneFound : categories!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
@@ -250,14 +255,19 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayDirector?>> GetDirectorsAsync()
+        public async Task<ReadOnlyCollection<DisplayDirector>> GetDirectorsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayDirector> noneFound = new List<DisplayDirector>() { DisplayDirector.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/director");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayDirector?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayDirector?> { DisplayDirector.NotFound }.AsReadOnly()
-                    : new List<DisplayDirector?> { DisplayDirector.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayDirector?>? directors = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayDirector>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return directors is null || !directors.Any(a => a?.GetType() == typeof(DisplayDirector)) ? noneFound : directors!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
@@ -414,14 +424,19 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFormat?>> GetFormatsAsync()
+        public async Task<ReadOnlyCollection<DisplayFormat>> GetFormatsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayFormat> noneFound = new List<DisplayFormat>() { DisplayFormat.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/format");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFormat?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayFormat?> { DisplayFormat.NotFound }.AsReadOnly()
-                    : new List<DisplayFormat?> { DisplayFormat.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayFormat?>? formats = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFormat>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return formats is null || !formats.Any(a => a?.GetType() == typeof(DisplayFormat)) ? noneFound : formats!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
@@ -471,7 +486,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void RenameDirectorAsync(int directorId, RenameDirector director)
+        public async Task RenameDirectorAsync(int directorId, RenameDirector director)
         {
             if (!director.Validate().IsValid) { return; }
 

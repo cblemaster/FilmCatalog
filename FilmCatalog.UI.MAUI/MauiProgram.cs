@@ -24,6 +24,12 @@ namespace FilmCatalog.UI.MAUI
                     .AddSingleton<AppShell>()
                     .AddTransient<ActorsPageModel>()
                     .AddTransient<ActorsPage>()
+                    .AddTransient<CategoriesPageModel>()
+                    .AddTransient<CategoriesPage>()
+                    .AddTransient<DirectorsPageModel>()
+                    .AddTransient<DirectorsPage>()
+                    .AddTransient<FormatsPageModel>()
+                    .AddTransient<FormatsPage>()
                     ;
 
 #if DEBUG

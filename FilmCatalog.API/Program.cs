@@ -133,7 +133,7 @@ app.MapGet("/category/{categoryId:int}", async Task<Results<BadRequest<string>, 
 
 app.MapGet("/category", Results<Ok<IEnumerable<DisplayCategory>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Categories is IEnumerable<Category> categories && categories.Any())
+    if (context.Categories.OrderBy(c => c.CategoryName) is IEnumerable<Category> categories && categories.Any())
     {
         IEnumerable<DisplayCategory> displayCategories = EntityToDTOMappers.MapCategoryCollection(categories);
         return TypedResults.Ok(displayCategories);
@@ -203,7 +203,7 @@ app.MapGet("/director/{directorId:int}", async Task<Results<BadRequest<string>, 
 
 app.MapGet("/director", Results<Ok<IEnumerable<DisplayDirector>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Directors is IEnumerable<Director> directors && directors.Any())
+    if (context.Directors.OrderBy(d => d.Name) is IEnumerable<Director> directors && directors.Any())
     {
         IEnumerable<DisplayDirector> displayDirectors = EntityToDTOMappers.MapDirectorCollection(directors);
         return TypedResults.Ok(displayDirectors);
@@ -556,7 +556,7 @@ app.MapGet("/format/{formatId:int}", async Task<Results<BadRequest<string>, Ok<D
 
 app.MapGet("/format", Results<Ok<IEnumerable<DisplayFormat>>, NotFound<string>> (FilmCatalogContext context) =>
 {
-    if (context.Formats is IEnumerable<Format> formats && formats.Any())
+    if (context.Formats.OrderBy(f => f.FormatName) is IEnumerable<Format> formats && formats.Any())
     {
         IEnumerable<DisplayFormat> displayFormats = EntityToDTOMappers.MapFormatCollection(formats);
         return TypedResults.Ok(displayFormats);
