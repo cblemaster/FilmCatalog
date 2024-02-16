@@ -21,6 +21,7 @@
 - Categories: Create, Delete*, View, View all
 - Directors: Create, Rename, Delete*, View, View all
 - Films: Create, Update, Delete, View, View all, View favorites, View rare or collectible, View five-star rated, assign actors, assign categories
+- Films: View films grouped by actor, director, category, or format
 - Formats: Create, Delete*, View, View all
 /* Can delete only if not associated with any film(s)
 
