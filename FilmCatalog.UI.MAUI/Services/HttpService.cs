@@ -292,7 +292,7 @@ namespace FilmCatalog.UI.MAUI.Services
             }
             catch (Exception) { throw; }
         }
-        
+
         public async Task<ReadOnlyCollection<DisplayFilm?>> GetRareFilmsAsync()
         {
             try
@@ -454,7 +454,7 @@ namespace FilmCatalog.UI.MAUI.Services
         public async void RenameActorAsync(int actorId, RenameActor actor)
         {
             if (!actor.Validate().IsValid) { return; }
-            
+
             StringContent content = new(JsonSerializer.Serialize(actor));
             content.Headers.ContentType = new("application/json");
 
@@ -484,7 +484,7 @@ namespace FilmCatalog.UI.MAUI.Services
         public async void UpdateFilmAsync(int filmId, UpdateFilm film)
         {
             if (!film.Validate().IsValid) { return; }
-            
+
             StringContent content = new(JsonSerializer.Serialize(film));
             content.Headers.ContentType = new("application/json");
 

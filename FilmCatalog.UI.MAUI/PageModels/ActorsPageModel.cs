@@ -9,7 +9,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
     public partial class ActorsPageModel(IHttpService httpService) : ObservableObject
     {
         private readonly IHttpService _httpService = httpService;
-        
+
         [ObservableProperty]
         private ReadOnlyCollection<DisplayActor> _actors = default!;
 
