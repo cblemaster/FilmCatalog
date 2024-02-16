@@ -284,14 +284,19 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFilmsAsync()
+        public async Task<ReadOnlyCollection<DisplayFilm>> GetFilmsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayFilm> noneFound = new List<DisplayFilm>() { DisplayFilm.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/film");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly()
-                    : new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayFilm?>? films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return films is null || !films.Any(a => a?.GetType() == typeof(DisplayFilm)) ? noneFound : films!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
@@ -501,7 +506,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void UpdateFilmAsync(int filmId, UpdateFilm film)
+        public async Task UpdateFilmAsync(int filmId, UpdateFilm film)
         {
             if (!film.Validate().IsValid) { return; }
 

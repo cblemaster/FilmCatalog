@@ -24,7 +24,7 @@ namespace FilmCatalog.UI.MAUI.Services
         Task<DisplayDirector> GetDirectorAsync(int directorId);
         Task<ReadOnlyCollection<DisplayDirector>> GetDirectorsAsync();
         Task<DisplayFilm> GetFilmAsync(int filmId);
-        Task<ReadOnlyCollection<DisplayFilm?>> GetFilmsAsync();
+        Task<ReadOnlyCollection<DisplayFilm>> GetFilmsAsync();
         Task<ReadOnlyCollection<DisplayFilm?>> GetFavoriteFilmsAsync();
         Task<ReadOnlyCollection<DisplayFilm?>> GetRareFilmsAsync();
         Task<ReadOnlyCollection<DisplayFilm?>> GetFivestarFilmsAsync();
@@ -38,6 +38,6 @@ namespace FilmCatalog.UI.MAUI.Services
         void RemoveCategoriesFromFilmAsync(int filmId, ICollection<DisplayCategory> categories);
         Task RenameActorAsync(int actorId, RenameActor actor);
         Task RenameDirectorAsync(int directorId, RenameDirector director);
-        void UpdateFilmAsync(int filmId, UpdateFilm film);
+        Task UpdateFilmAsync(int filmId, UpdateFilm film);
     }
 }

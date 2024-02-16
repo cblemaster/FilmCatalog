@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilmCatalog.UI.MAUI.Pages.FilmsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:pageModels="clr-namespace:FilmCatalog.UI.MAUI.PageModels"
+             xmlns:models="clr-namespace:FilmCatalog.UI.MAUI.Models"
+             x:DataType="{x:Type pageModels:FilmsPageModel}"
+             Title="FilmsPage">
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <Style TargetType="Grid">
+            <Setter Property="Margin" Value="10,10,10,10" />
+        </Style>
+        <Style TargetType="Label" x:Key="FilmPageLabelStyle">
+            <Setter Property="TextColor" Value="{StaticResource MidnightBlue}" />
+        </Style>
+        <Style TargetType="Label" x:Key="FilmDetailsLabelStyle" BasedOn="{StaticResource FilmPageLabelStyle}">
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+        <!--<Style TargetType="HorizontalStackLayout">
+            <Setter Property="Spacing" Value="10" />
+        </Style>-->
+        <Style TargetType="Frame">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BorderColor" Value="{StaticResource Secondary}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                Value="{StaticResource LightYellowAccent}" />
+                                <Setter Property="BorderColor" Value="{StaticResource Magenta}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <Grid ColumnDefinitions="4*,6*">
+        <CollectionView ItemsSource="{Binding Films, Mode=OneWay}" SelectedItem="{Binding SelectedFilm, Mode=OneWayToSource}" 
+                SelectionChangedCommand="{Binding SelectedFilmChangedCommand, Mode=OneWay}" SelectionMode="Single" x:Name="FilmsCollectionView" EmptyView="No films found.">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type models:DisplayFilm}">
+                    <Frame>
+                        <Grid RowDefinitions="1*,1*,1*,1*">
+                            <Label Text="{Binding Title, Mode=OneWay}" Style="{StaticResource FilmPageLabelStyle}" FontSize="16" FontAttributes="Bold" />
+                            <Label Text="{Binding Year, Mode=OneWay, StringFormat='Year: {0}'}" Style="{StaticResource FilmPageLabelStyle}" Grid.Row="1" />
+                            <Label Text="{Binding Format.FormatName, Mode=OneWay, StringFormat='Format: {0}'}" Style="{StaticResource FilmPageLabelStyle}" Grid.Row="2" />
+                            <Label Text="{Binding Director.Name, Mode=OneWay, StringFormat='Director: {0}'}" Style="{StaticResource FilmPageLabelStyle}" Grid.Row="3" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Grid BindingContext="{Binding Source={x:Reference FilmsCollectionView}, Path=SelectedItem, Mode=OneWay}" x:DataType="{x:Type models:DisplayFilm}" Grid.Column="1" ColumnDefinitions="3*,7*" RowDefinitions="2*,2*,2*,2*,2*,2*,2*,2*,2*,3*,2*,2*,2*,2*">
+            <Label Text="Title" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Title, Mode=OneWay}" IsEnabled="False" Grid.Column="1" />
+            <Label Text="Description" Grid.Row="1" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Description, Mode=OneWay}" IsEnabled="False" Grid.Row="1" Grid.Column="1" />
+            <Label Text="Format" Grid.Row="2" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Format.FormatName, Mode=OneWay}" IsEnabled="False" Grid.Row="2" Grid.Column="1" />
+            <Label Text="Director" Grid.Row="3" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Director.Name, Mode=OneWay}" IsEnabled="False" Grid.Row="3" Grid.Column="1" />
+            <Label Text="Quantity" Grid.Row="4" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Quantity, Mode=OneWay}" IsEnabled="False" Grid.Row="4" Grid.Column="1" />
+            <Label Text="Year" Grid.Row="5" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Year, Mode=OneWay}" IsEnabled="False" Grid.Row="5" Grid.Column="1" />
+            <Label Text="Studio" Grid.Row="6" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding Studio, Mode=OneWay}" IsEnabled="False" Grid.Row="6" Grid.Column="1" />
+            <Label Text="Star rating" Grid.Row="7" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Text="{Binding StarRating, Mode=OneWay}" IsEnabled="False" Grid.Row="7" Grid.Column="1" />
+            <Label Text="Favorite?" Grid.Row="8" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Switch IsToggled="{Binding IsFavorite, Mode=OneWay}" IsEnabled="False" Grid.Row="8" Grid.Column="1" />
+            <Label Text="Rare, collectible, and/or valuable?" Grid.Row="9" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Switch IsToggled="{Binding IsRareCollectibleAndOrValuable, Mode=OneWay}" IsEnabled="False" Grid.Row="9" Grid.Column="1" />
+            <Label Text="Create Date" Grid.Row="10" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <DatePicker Date="{Binding CreateDate, Mode=OneWay}" IsEnabled="False" Grid.Row="10" Grid.Column="1" />
+            <Label Text="Update Date" Grid.Row="11" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <DatePicker Date="{Binding UpdateDate, Mode=OneWay}" IsEnabled="False" Grid.Row="11" Grid.Column="1" />
+            <Label Text="Actors" Grid.Row="12" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry Grid.Row="12" IsEnabled="False" Grid.Column="1" />
+            <Label Text="Categories" Grid.Row="13" Style="{StaticResource FilmDetailsLabelStyle}" />
+            <Entry IsEnabled="False" Grid.Row="13" Grid.Column="1" />
+        </Grid>
+    </Grid>
+</ContentPage>

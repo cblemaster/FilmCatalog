@@ -22,6 +22,8 @@ namespace FilmCatalog.UI.MAUI
                 .Services
                     .AddSingleton<IHttpService, HttpService>()
                     .AddSingleton<AppShell>()
+                    .AddTransient<FilmsPageModel>()
+                    .AddTransient<FilmsPage>()
                     .AddTransient<ActorsPageModel>()
                     .AddTransient<ActorsPage>()
                     .AddTransient<CategoriesPageModel>()
