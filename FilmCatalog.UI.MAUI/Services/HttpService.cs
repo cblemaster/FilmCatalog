@@ -15,7 +15,7 @@ namespace FilmCatalog.UI.MAUI.Services
             BaseAddress = new Uri(BASE_URI)
         };
 
-        public async void AssignActorsToFilm(int filmId, ICollection<DisplayActor> actors)
+        public async void AssignActorsToFilmAsync(int filmId, ICollection<DisplayActor> actors)
         {
             if (actors is null || !actors.Any() || filmId < 1) { return; }
 
@@ -30,7 +30,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void AssignCategoriesToFilm(int filmId, ICollection<DisplayCategory> categories)
+        public async void AssignCategoriesToFilmAsync(int filmId, ICollection<DisplayCategory> categories)
         {
             if (categories is null || !categories.Any() || filmId < 1) { return; }
 
@@ -45,7 +45,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayActor?> CreateActor(CreateActor actor)
+        public async Task<DisplayActor?> CreateActorAsync(CreateActor actor)
         {
             if (!actor.Validate().IsValid) { return null; }
 
@@ -56,12 +56,12 @@ namespace FilmCatalog.UI.MAUI.Services
             {
                 HttpResponseMessage response = await _client.PostAsync("/actor", content);
                 response.EnsureSuccessStatusCode();
-                return await GetActor(await response.Content.ReadFromJsonAsync<DisplayActor?>() is DisplayActor newActor ? newActor.ActorId : 0);
+                return await GetActorAsync(await response.Content.ReadFromJsonAsync<DisplayActor?>() is DisplayActor newActor ? newActor.ActorId : 0);
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayCategory?> CreateCategory(CreateCategory category)
+        public async Task<DisplayCategory?> CreateCategoryAsync(CreateCategory category)
         {
             if (!category.Validate().IsValid) { return null; }
 
@@ -72,12 +72,12 @@ namespace FilmCatalog.UI.MAUI.Services
             {
                 HttpResponseMessage response = await _client.PostAsync("/category", content);
                 response.EnsureSuccessStatusCode();
-                return await GetCategory(await response.Content.ReadFromJsonAsync<DisplayCategory>() is DisplayCategory newCategory ? newCategory.CategoryId : 0);
+                return await GetCategoryAsync(await response.Content.ReadFromJsonAsync<DisplayCategory>() is DisplayCategory newCategory ? newCategory.CategoryId : 0);
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayDirector?> CreateDirector(CreateDirector director)
+        public async Task<DisplayDirector?> CreateDirectorAsync(CreateDirector director)
         {
             if (!director.Validate().IsValid) { return null; }
 
@@ -88,12 +88,12 @@ namespace FilmCatalog.UI.MAUI.Services
             {
                 HttpResponseMessage response = await _client.PostAsync("/director", content);
                 response.EnsureSuccessStatusCode();
-                return await GetDirector(await response.Content.ReadFromJsonAsync<DisplayDirector>() is DisplayDirector newDirector ? newDirector.DirectorId : 0);
+                return await GetDirectorAsync(await response.Content.ReadFromJsonAsync<DisplayDirector>() is DisplayDirector newDirector ? newDirector.DirectorId : 0);
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayFilm?> CreateFilm(CreateFilm film)
+        public async Task<DisplayFilm?> CreateFilmAsync(CreateFilm film)
         {
             if (!film.Validate().IsValid) { return null; }
 
@@ -104,12 +104,12 @@ namespace FilmCatalog.UI.MAUI.Services
             {
                 HttpResponseMessage response = await _client.PostAsync("/film", content);
                 response.EnsureSuccessStatusCode();
-                return await GetFilm(await response.Content.ReadFromJsonAsync<DisplayFilm>() is DisplayFilm newFilm ? newFilm.FilmId : 0);
+                return await GetFilmAsync(await response.Content.ReadFromJsonAsync<DisplayFilm>() is DisplayFilm newFilm ? newFilm.FilmId : 0);
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayFormat?> CreateFormat(CreateFormat format)
+        public async Task<DisplayFormat?> CreateFormatAsync(CreateFormat format)
         {
             if (!format.Validate().IsValid) { return null; }
 
@@ -120,12 +120,12 @@ namespace FilmCatalog.UI.MAUI.Services
             {
                 HttpResponseMessage response = await _client.PostAsync("/format", content);
                 response.EnsureSuccessStatusCode();
-                return await GetFormat(await response.Content.ReadFromJsonAsync<DisplayFormat>() is DisplayFormat newFormat ? newFormat.FormatId : 0);
+                return await GetFormatAsync(await response.Content.ReadFromJsonAsync<DisplayFormat>() is DisplayFormat newFormat ? newFormat.FormatId : 0);
             }
             catch (Exception) { throw; }
         }
 
-        public async void DeleteActor(int actorId)
+        public async void DeleteActorAsync(int actorId)
         {
             if (actorId < 1) { return; }
 
@@ -137,7 +137,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteCategory(int categoryId)
+        public async void DeleteCategoryAsync(int categoryId)
         {
             if (categoryId < 1) { return; }
 
@@ -149,7 +149,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteDirector(int directorId)
+        public async void DeleteDirectorAsync(int directorId)
         {
             if (directorId < 1) { return; }
 
@@ -161,7 +161,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteFilm(int filmId)
+        public async void DeleteFilmAsync(int filmId)
         {
             if (filmId < 1) { return; }
 
@@ -173,7 +173,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteFormat(int formatId)
+        public async void DeleteFormatAsync(int formatId)
         {
             if (formatId < 1) { return; }
 
@@ -185,7 +185,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayActor> GetActor(int actorId)
+        public async Task<DisplayActor> GetActorAsync(int actorId)
         {
             try
             {
@@ -197,7 +197,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayActor?>> GetActors()
+        public async Task<ReadOnlyCollection<DisplayActor?>> GetActorsAsync()
         {
             try
             {
@@ -209,7 +209,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayCategory> GetCategory(int categoryId)
+        public async Task<DisplayCategory> GetCategoryAsync(int categoryId)
         {
             try
             {
@@ -221,7 +221,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayCategory?>> GetCategories()
+        public async Task<ReadOnlyCollection<DisplayCategory?>> GetCategoriesAsync()
         {
             try
             {
@@ -233,7 +233,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayDirector> GetDirector(int directorId)
+        public async Task<DisplayDirector> GetDirectorAsync(int directorId)
         {
             try
             {
@@ -245,7 +245,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayDirector?>> GetDirectors()
+        public async Task<ReadOnlyCollection<DisplayDirector?>> GetDirectorsAsync()
         {
             try
             {
@@ -257,7 +257,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayFilm> GetFilm(int filmId)
+        public async Task<DisplayFilm> GetFilmAsync(int filmId)
         {
             try
             {
@@ -269,7 +269,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFilms()
+        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFilmsAsync()
         {
             try
             {
@@ -281,7 +281,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFavoriteFilms()
+        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFavoriteFilmsAsync()
         {
             try
             {
@@ -293,7 +293,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
         
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetRareFilms()
+        public async Task<ReadOnlyCollection<DisplayFilm?>> GetRareFilmsAsync()
         {
             try
             {
@@ -305,7 +305,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFivestarFilms()
+        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFivestarFilmsAsync()
         {
             try
             {
@@ -317,7 +317,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByActor()
+        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByActorAsync()
         {
             //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError = Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, actorGroup) => actorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
 
@@ -337,7 +337,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByCategory()
+        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByCategoryAsync()
         {
             //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError = Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, categoryGroup) => categoryGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
 
@@ -357,7 +357,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByDirector()
+        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByDirectorAsync()
         {
             //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError =  Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, directorGroup) => directorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
 
@@ -377,7 +377,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByFormat()
+        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByFormatAsync()
         {
             //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError = Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, formatGroup) => formatGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
 
@@ -397,7 +397,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<DisplayFormat> GetFormat(int formatId)
+        public async Task<DisplayFormat> GetFormatAsync(int formatId)
         {
             try
             {
@@ -409,7 +409,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFormat?>> GetFormats()
+        public async Task<ReadOnlyCollection<DisplayFormat?>> GetFormatsAsync()
         {
             try
             {
@@ -421,7 +421,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void RemoveActorsFromFilm(int filmId, ICollection<DisplayActor> actors)
+        public async void RemoveActorsFromFilmAsync(int filmId, ICollection<DisplayActor> actors)
         {
             if (actors is null || !actors.Any() || filmId < 1) { return; }
 
@@ -436,7 +436,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void RemoveCategoriesFromFilm(int filmId, ICollection<DisplayCategory> categories)
+        public async void RemoveCategoriesFromFilmAsync(int filmId, ICollection<DisplayCategory> categories)
         {
             if (categories is null || !categories.Any() || filmId < 1) { return; }
 
@@ -451,7 +451,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void RenameActor(int actorId, RenameActor actor)
+        public async void RenameActorAsync(int actorId, RenameActor actor)
         {
             if (!actor.Validate().IsValid) { return; }
             
@@ -466,7 +466,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void RenameDirector(int directorId, RenameDirector director)
+        public async void RenameDirectorAsync(int directorId, RenameDirector director)
         {
             if (!director.Validate().IsValid) { return; }
 
@@ -481,7 +481,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void UpdateFilm(int filmId, UpdateFilm film)
+        public async void UpdateFilmAsync(int filmId, UpdateFilm film)
         {
             if (!film.Validate().IsValid) { return; }
             

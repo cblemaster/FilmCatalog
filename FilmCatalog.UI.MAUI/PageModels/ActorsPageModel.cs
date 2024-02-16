@@ -6,24 +6,16 @@ using System.Collections.ObjectModel;
 
 namespace FilmCatalog.UI.MAUI.PageModels
 {
-    public partial class ActorsPageModel : ObservableObject
+    public partial class ActorsPageModel(IHttpService httpService) : ObservableObject
     {
-        private readonly IHttpService _httpService;
-
-        public ActorsPageModel(IHttpService httpService)
-        {
-            _httpService = httpService;
-        }
-
+        private readonly IHttpService _httpService = httpService;
+        
         [ObservableProperty]
         private ReadOnlyCollection<DisplayActor> _actors = default!;
 
         [RelayCommand]
-        private void PageAppearing() => LoadData();
+        private void PageAppearing() => LoadDataAsync();
 
-        private async void LoadData()
-        {
-            Actors = await _httpService.GetActors();
-        }
+        private async void LoadDataAsync() => Actors = await _httpService.GetActorsAsync();
     }
 }
