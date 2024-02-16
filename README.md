@@ -6,7 +6,7 @@
 - .NET 8 / C# 12
 - SQL Server database
 - API: ASP.NET Core, minimal API, Entity Framework Core 8
-- UI: .NET MAUI (targeting desktop only), CommunityToolkit.Mvvm nuget package
+- UI: .NET MAUI (targeting Windows desktop only), CommunityToolkit.Mvvm and CommunityToolkit.Maui nuget packages
 - Programming techniques:
 	- Null object pattern
 	- Immutable objects and collections
