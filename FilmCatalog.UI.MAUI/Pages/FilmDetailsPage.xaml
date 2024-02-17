@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FilmCatalog.UI.MAUI.Pages.FilmDetailsPage"
+             Title="FilmDetailsPage">
+    <!--<Grid BindingContext="{Binding Source={x:Reference FilmsCollectionView}, Path=SelectedItem, Mode=OneWay}" x:DataType="{x:Type models:DisplayFilm}" Grid.Column="1" ColumnDefinitions="1*,1*">
+        <VerticalStackLayout>
+            <Label Text="Title" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Title, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" FontAttributes="Bold" />
+            <Label Text="Description" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Description, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Director" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Director.Name, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Year" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Year, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Studio" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Studio, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Quantity" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Quantity, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Format" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Format.FormatName, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Column="1">
+            <Label Text="Star rating" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding StarRating, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Favorite?" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding IsFavorite, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Rare, collectible, or valuable?" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding IsRareCollectibleAndOrValuable, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Actors" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Actors, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+            <Label Text="Categories" Style="{StaticResource SmallLabelStyle}" />
+            <Label Text="{Binding Categories, Mode=OneWay}" Style="{StaticResource BlueLabelStyle}" />
+        </VerticalStackLayout>
+    </Grid>
+    <VerticalStackLayout Grid.Column="2">
+        <Button Text="Create film" />
+        <Button Text="Update film" />
+        <Button Text="Delete film" />
+    </VerticalStackLayout>-->
+</ContentPage>
