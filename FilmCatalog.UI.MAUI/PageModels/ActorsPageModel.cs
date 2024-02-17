@@ -45,9 +45,9 @@ namespace FilmCatalog.UI.MAUI.PageModels
             {
                 return;
             }
-            
+
             CreateActor createActor = new() { Name = CreateActorName };
-            
+
             if (await _httpService.CreateActorAsync(createActor) is DisplayActor)
             {
                 await LoadDataAsync();
@@ -55,7 +55,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
             }
             else
             {
-                await Shell.Current.DisplayAlert("Error!", $"Error creating { CreateActorName }.", "OK");
+                await Shell.Current.DisplayAlert("Error!", $"Error creating {CreateActorName}.", "OK");
             }
         }
 
@@ -64,7 +64,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
         {
             if (!CanRenameActor) { return; }
 
-            string result = await Shell.Current.DisplayPromptAsync("Rename actor", "New name for actor:", placeholder: $"{ SelectedActor.Name }", maxLength: 255);
+            string result = await Shell.Current.DisplayPromptAsync("Rename actor", "New name for actor:", placeholder: $"{SelectedActor.Name}", maxLength: 255);
 
             if (!string.IsNullOrWhiteSpace(result))
             {

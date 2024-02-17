@@ -4,9 +4,9 @@ namespace FilmCatalog.UI.MAUI.Pages;
 
 public partial class DirectorsPage : ContentPage
 {
-	public DirectorsPage(DirectorsPageModel pageModel)
-	{
-		InitializeComponent();
+    public DirectorsPage(DirectorsPageModel pageModel)
+    {
+        InitializeComponent();
         BindingContext = pageModel;
     }
 }

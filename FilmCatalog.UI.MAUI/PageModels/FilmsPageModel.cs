@@ -21,10 +21,8 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private async Task PageAppearingAsync() => await LoadDataAsync();
 
         [RelayCommand]
-        private async Task SelectedFilmChanged()
-        {
+        private async Task SelectedFilmChanged() =>
             await Shell.Current.Navigation.PushModalAsync(new FilmDetailsPage(SelectedFilm));
-        }
 
         private async Task LoadDataAsync() => Films = await _httpService.GetFilmsAsync();
     }

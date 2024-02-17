@@ -4,9 +4,9 @@ namespace FilmCatalog.UI.MAUI.Pages;
 
 public partial class FilmsPage : ContentPage
 {
-	public FilmsPage(FilmsPageModel pageModel)
-	{
-		InitializeComponent();
+    public FilmsPage(FilmsPageModel pageModel)
+    {
+        InitializeComponent();
         BindingContext = pageModel;
     }
 }

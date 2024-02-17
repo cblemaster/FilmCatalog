@@ -29,10 +29,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private async Task PageAppearingAsync() => await LoadDataAsync();
 
         [RelayCommand]
-        private void SelectedFormatChanged()
-        {
-            CanDeleteFormat = true;
-        }
+        private void SelectedFormatChanged() => CanDeleteFormat = true;
 
         [RelayCommand]
         private async Task CreateFormatAsync()

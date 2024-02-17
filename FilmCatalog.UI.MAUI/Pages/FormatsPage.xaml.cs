@@ -4,9 +4,9 @@ namespace FilmCatalog.UI.MAUI.Pages;
 
 public partial class FormatsPage : ContentPage
 {
-	public FormatsPage(FormatsPageModel pageModel)
-	{
-		InitializeComponent();
+    public FormatsPage(FormatsPageModel pageModel)
+    {
+        InitializeComponent();
         BindingContext = pageModel;
     }
 }
