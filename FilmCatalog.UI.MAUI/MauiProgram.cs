@@ -25,7 +25,6 @@ namespace FilmCatalog.UI.MAUI
                     .AddTransient<FilmsPageModel>()
                     .AddTransient<FilmsPage>()
                     .AddTransient<FilmDetailsPageModel>()
-                    .AddTransient<FilmDetailsPage>()
                     .AddTransient<ActorsPageModel>()
                     .AddTransient<ActorsPage>()
                     .AddTransient<CategoriesPageModel>()

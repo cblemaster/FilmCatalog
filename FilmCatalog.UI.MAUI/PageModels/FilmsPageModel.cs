@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FilmCatalog.UI.MAUI.Models;
+using FilmCatalog.UI.MAUI.Pages;
 using FilmCatalog.UI.MAUI.Services;
 using System.Collections.ObjectModel;
 
@@ -20,9 +21,9 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private async Task PageAppearingAsync() => await LoadDataAsync();
 
         [RelayCommand]
-        private void SelectedFilmChanged()
+        private async Task SelectedFilmChanged()
         {
-            
+            await Shell.Current.Navigation.PushModalAsync(new FilmDetailsPage(SelectedFilm));
         }
 
         private async Task LoadDataAsync() => Films = await _httpService.GetFilmsAsync();
