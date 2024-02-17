@@ -10,57 +10,23 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
-    <ContentPage.Resources>
-        <Style TargetType="Grid">
-            <Setter Property="Margin" Value="10,10,10,10" />
-        </Style>
-        <Style TargetType="HorizontalStackLayout">
-            <Setter Property="Spacing" Value="10" />
-        </Style>
-        <Style TargetType="Frame">
-            <Setter Property="VisualStateManager.VisualStateGroups">
-                <VisualStateGroupList>
-                    <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal">
-                            <VisualState.Setters>
-                                <Setter Property="BorderColor" Value="{StaticResource Secondary}" />
-                            </VisualState.Setters>
-                        </VisualState>
-                        <VisualState x:Name="Selected">
-                            <VisualState.Setters>
-                                <Setter Property="BackgroundColor"
-                                    Value="{StaticResource LightYellowAccent}" />
-                                <Setter Property="BorderColor" Value="{StaticResource Magenta}" />
-                            </VisualState.Setters>
-                        </VisualState>
-                    </VisualStateGroup>
-                </VisualStateGroupList>
-            </Setter>
-        </Style>
-        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
-            <Setter Property="TextColor" Value="{StaticResource Magenta}" />
-            <Setter Property="BackgroundColor" Value="{StaticResource LightPink}" />
-        </Style>
-    </ContentPage.Resources>
-    <Grid RowDefinitions="85*,15*">
+    <Grid Style="{StaticResource ContainerGridStyle}" RowDefinitions="85*,15*">
         <CollectionView ItemsSource="{Binding Categories, Mode=OneWay}" SelectedItem="{Binding SelectedCategory, Mode=OneWayToSource}" 
-                    SelectionChangedCommand="{Binding SelectedCategoryChangedCommand, Mode=OneWay}" SelectionMode="Single" EmptyView="No categories found.">
+                    SelectionChangedCommand="{Binding SelectedCategoryChangedCommand, Mode=OneWay}" EmptyView="No categories found.">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type models:DisplayCategory}">
                     <Frame>
-                        <Grid ColumnDefinitions="2*,3*">
-                            <Label Text="{Binding CategoryName, Mode=OneWay}" FontSize="16" TextColor="{StaticResource MidnightBlue}" />
-                        </Grid>
+                        <Label Text="{Binding CategoryName, Mode=OneWay}" Style="{StaticResource LargeBlueLabelStyle}" />
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Grid Grid.Row="1" ColumnDefinitions="1*,1*">
-            <HorizontalStackLayout>
-                <Label Text="New:" FontAttributes="Bold" TextColor="{StaticResource MidnightBlue}" VerticalOptions="Center" />
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}">
+                <Label Text="New:" Style="{StaticResource MediumBlueBoldLabelStyle}" VerticalOptions="Center" />
                 <Entry Text="{Binding CreateCategoryName, Mode=TwoWay}" Placeholder="category name" WidthRequest="200">
                     <Entry.Behaviors>
                         <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="1" />
@@ -68,7 +34,7 @@
                 </Entry>
                 <Button Command="{Binding CreateCategoryCommand, Mode=OneWay}" IsEnabled="{Binding CanCreateCategory, Mode=OneWay}" Text="Create" />
             </HorizontalStackLayout>
-            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="EndAndExpand">
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
                 <Button Command="{Binding DeleteCategoryCommand, Mode=OneWay}" IsEnabled="{Binding CanDeleteCategory, Mode=OneWay}" Text="Delete Selected" />
             </HorizontalStackLayout>
         </Grid>

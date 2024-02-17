@@ -4,6 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <Style TargetType="CollectionView">
+        <Setter Property="SelectionMode" Value="Single" />
+    </Style>
+    
+    <Style TargetType="Grid" x:Key="ContainerGridStyle">
+        <Setter Property="Margin" Value="10,10,10,10" />
+    </Style>
+
+    <Style TargetType="HorizontalStackLayout" x:Key="HorizontalStackLayoutStyle">
+        <Setter Property="Spacing" Value="10" />
+    </Style>
+
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
     </Style>
@@ -132,10 +144,36 @@
         </Setter>
     </Style>
 
+    <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource Magenta}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource LightPink}" />
+    </Style>
+
     <Style TargetType="Frame">
         <Setter Property="HasShadow" Value="False" />
         <Setter Property="BorderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
         <Setter Property="CornerRadius" Value="8" />
+    <!--</Style>
+
+    <Style TargetType="Frame">-->
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BorderColor" Value="{StaticResource Secondary}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor"
+                                Value="{StaticResource LightYellowAccent}" />
+                            <Setter Property="BorderColor" Value="{StaticResource Magenta}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style TargetType="ImageButton">
@@ -195,6 +233,34 @@
         <Setter Property="FontSize" Value="24" />
         <Setter Property="HorizontalOptions" Value="Center" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BlueLabelStyle">
+        <Setter Property="TextColor" Value="{StaticResource MidnightBlue}" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="BoldBlueLabelStyle" BasedOn="{StaticResource BlueLabelStyle}">
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LargeBlueLabelStyle" BasedOn="{StaticResource BlueLabelStyle}">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="MediumBlueLabelStyle" BasedOn="{StaticResource BlueLabelStyle}">
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SmallBlueLabelStyle" BasedOn="{StaticResource BlueLabelStyle}">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="LargeBlueBoldLabelStyle" BasedOn="{StaticResource BoldBlueLabelStyle}">
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="MediumBlueBoldLabelStyle" BasedOn="{StaticResource BoldBlueLabelStyle}">
+        <Setter Property="FontSize" Value="14" />
     </Style>
 
     <Style TargetType="ListView">
