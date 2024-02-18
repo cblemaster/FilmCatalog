@@ -25,9 +25,9 @@ namespace FilmCatalog.UI.MAUI.Services
         Task<ReadOnlyCollection<DisplayDirector>> GetDirectorsAsync();
         Task<DisplayFilm> GetFilmAsync(int filmId);
         Task<ReadOnlyCollection<DisplayFilm>> GetFilmsAsync();
-        Task<ReadOnlyCollection<DisplayFilm?>> GetFavoriteFilmsAsync();
-        Task<ReadOnlyCollection<DisplayFilm?>> GetRareFilmsAsync();
-        Task<ReadOnlyCollection<DisplayFilm?>> GetFivestarFilmsAsync();
+        Task<ReadOnlyCollection<DisplayFilm>> GetFavoriteFilmsAsync();
+        Task<ReadOnlyCollection<DisplayFilm>> GetRareFilmsAsync();
+        Task<ReadOnlyCollection<DisplayFilm>> GetFivestarFilmsAsync();
         Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByActorAsync();
         Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByCategoryAsync();
         Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByDirectorAsync();

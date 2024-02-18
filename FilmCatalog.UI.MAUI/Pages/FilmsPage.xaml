@@ -10,9 +10,20 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
-    <Grid Style="{StaticResource ContainerGridStyle}">
+    <Grid Style="{StaticResource ContainerGridStyle}" ColumnDefinitions="2*,8*">
+        <CollectionView ItemsSource="{Binding Filters, Mode=OneWay}" SelectedItem="{Binding SelectedFilter, Mode=OneWayToSource}"
+                        SelectionChangedCommand="{Binding SelectedFilterChangedCommand, Mode=OneWay}" VerticalOptions="CenterAndExpand">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type x:String}">
+                    <Label Text="{Binding ., Mode=OneWay}" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <CollectionView ItemsSource="{Binding Films, Mode=OneWay}" SelectedItem="{Binding SelectedFilm, Mode=OneWayToSource}" 
-                    SelectionChangedCommand="{Binding SelectedFilmChangedCommand, Mode=OneWay}" EmptyView="No films found.">
+                    SelectionChangedCommand="{Binding SelectedFilmChangedCommand, Mode=OneWay}" Grid.Column="1" EmptyView="No films found.">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
             </CollectionView.ItemsLayout>

@@ -301,38 +301,53 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFavoriteFilmsAsync()
+        public async Task<ReadOnlyCollection<DisplayFilm>> GetFavoriteFilmsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayFilm> noneFound = new List<DisplayFilm>() { DisplayFilm.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/film/favorite");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly()
-                    : new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayFilm?>? films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return films is null || !films.Any(a => a?.GetType() == typeof(DisplayFilm)) ? noneFound : films!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetRareFilmsAsync()
+        public async Task<ReadOnlyCollection<DisplayFilm>> GetRareFilmsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayFilm> noneFound = new List<DisplayFilm>() { DisplayFilm.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/film/rare");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly()
-                    : new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayFilm?>? films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return films is null || !films.Any(a => a?.GetType() == typeof(DisplayFilm)) ? noneFound : films!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<DisplayFilm?>> GetFivestarFilmsAsync()
+        public async Task<ReadOnlyCollection<DisplayFilm>> GetFivestarFilmsAsync()
         {
             try
             {
+                ReadOnlyCollection<DisplayFilm> noneFound = new List<DisplayFilm>() { DisplayFilm.NotFound }.AsReadOnly();
+
                 HttpResponseMessage response = await _client.GetAsync("/film/fivestar");
-                return response.IsSuccessStatusCode && response.Content is not null
-                    ? response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm?>().ToBlockingEnumerable().ToList().AsReadOnly() ?? new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly()
-                    : new List<DisplayFilm?> { DisplayFilm.NotFound }.AsReadOnly();
+                if (response.IsSuccessStatusCode && response.Content is not null)
+                {
+                    ReadOnlyCollection<DisplayFilm?>? films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    return films is null || !films.Any(a => a?.GetType() == typeof(DisplayFilm)) ? noneFound : films!;
+                }
+                return noneFound;
             }
             catch (Exception) { throw; }
         }
