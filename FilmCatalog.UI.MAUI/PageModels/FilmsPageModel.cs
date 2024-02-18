@@ -18,7 +18,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private DisplayFilm _selectedFilm = default!;
 
         [RelayCommand]
-        private async Task PageAppearingAsync() => await LoadDataAsync();
+        private void PageAppearing() => LoadDataAsync();
 
         [RelayCommand]
         private async Task SelectedFilmChanged() =>

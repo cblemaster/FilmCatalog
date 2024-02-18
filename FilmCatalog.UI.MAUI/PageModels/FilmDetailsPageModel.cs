@@ -56,9 +56,29 @@ namespace FilmCatalog.UI.MAUI.PageModels
         [RelayCommand]
         private async Task DeleteFilmAsync()
         {
-            if (!CanDeleteFilm)
+            if (!CanDeleteFilm || Film is null || Film.FilmId < 1)
             {
                 return;
+            }
+
+            bool deleteConfirmed = await Shell.Current.DisplayAlert("Confirm delete", $"Are you sure you want to delete {Film.Title}?", "Yes", "No");
+
+            if (deleteConfirmed)
+            {
+                if (Film.Actors.Any())
+                {
+                    await Shell.Current.DisplayAlert("Error!", "Unable to delete film because it is associated with one or more actors.", "OK");
+                    return;
+                }
+
+                if (Film.Categories.Any())
+                {
+                    await Shell.Current.DisplayAlert("Error!", "Unable to delete film because it is associated with one or more categories.", "OK");
+                    return;
+                }
+
+                await _httpService.DeleteFilmAsync(Film.FilmId);
+                await Shell.Current.Navigation.PopModalAsync();
             }
         }
     }

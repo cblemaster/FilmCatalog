@@ -161,7 +161,7 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async void DeleteFilmAsync(int filmId)
+        public async Task DeleteFilmAsync(int filmId)
         {
             if (filmId < 1) { return; }
 
@@ -235,7 +235,7 @@ namespace FilmCatalog.UI.MAUI.Services
                 HttpResponseMessage response = await _client.GetAsync("/category");
                 if (response.IsSuccessStatusCode && response.Content is not null)
                 {
-                    ReadOnlyCollection<DisplayCategory?>? categories = response.Content.ReadFromJsonAsAsyncEnumerable< DisplayCategory>().ToBlockingEnumerable().ToList().AsReadOnly();
+                    ReadOnlyCollection<DisplayCategory?>? categories = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayCategory>().ToBlockingEnumerable().ToList().AsReadOnly();
                     return categories is null || !categories.Any(a => a?.GetType() == typeof(DisplayCategory)) ? noneFound : categories!;
                 }
                 return noneFound;

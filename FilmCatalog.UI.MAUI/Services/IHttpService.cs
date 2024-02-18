@@ -15,7 +15,7 @@ namespace FilmCatalog.UI.MAUI.Services
         Task DeleteActorAsync(int actorId);
         Task DeleteCategoryAsync(int categoryId);
         Task DeleteDirectorAsync(int directorId);
-        void DeleteFilmAsync(int filmId);
+        Task DeleteFilmAsync(int filmId);
         Task DeleteFormatAsync(int formatId);
         Task<DisplayActor> GetActorAsync(int actorId);
         Task<ReadOnlyCollection<DisplayActor>> GetActorsAsync();
