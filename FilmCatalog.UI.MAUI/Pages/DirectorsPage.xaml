@@ -25,7 +25,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Grid Grid.Row="1" ColumnDefinitions="1*,1*">
-            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}">
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutWithHeightStyle}">
                 <Label Text="New:" Style="{StaticResource MediumBlueBoldLabelStyle}" VerticalOptions="Center" />
                 <Entry Text="{Binding CreateDirectorName, Mode=TwoWay}" Placeholder="director name" WidthRequest="200">
                     <Entry.Behaviors>
@@ -34,7 +34,7 @@
                 </Entry>
                 <Button Command="{Binding CreateDirectorCommand, Mode=OneWay}" IsEnabled="{Binding CanCreateDirector, Mode=OneWay}" Text="Create" />
             </HorizontalStackLayout>
-            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutWithHeightStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
                 <Button Command="{Binding RenameDirectorCommand, Mode=OneWay}" IsEnabled="{Binding CanRenameDirector, Mode=OneWay}" Text="Rename Selected" />
                 <Button Command="{Binding DeleteDirectorCommand, Mode=OneWay}" IsEnabled="{Binding CanDeleteDirector, Mode=OneWay}" Text="Delete Selected" />
             </HorizontalStackLayout>

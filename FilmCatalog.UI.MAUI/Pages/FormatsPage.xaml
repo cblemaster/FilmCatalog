@@ -25,7 +25,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Grid Grid.Row="1" ColumnDefinitions="1*,1*">
-            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}">
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutWithHeightStyle}">
                 <Label Text="New:" Style="{StaticResource MediumBlueBoldLabelStyle}" VerticalOptions="Center" />
                 <Entry Text="{Binding CreateFormatName, Mode=TwoWay}" Placeholder="format name" WidthRequest="200">
                     <Entry.Behaviors>
@@ -34,7 +34,7 @@
                 </Entry>
                 <Button Command="{Binding CreateFormatCommand, Mode=OneWay}" IsEnabled="{Binding CanCreateFormat, Mode=OneWay}" Text="Create" />
             </HorizontalStackLayout>
-            <HorizontalStackLayout  Style="{StaticResource HorizontalStackLayoutStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
+            <HorizontalStackLayout  Style="{StaticResource HorizontalStackLayoutWithHeightStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
                 <Button Command="{Binding DeleteFormatCommand, Mode=OneWay}" IsEnabled="{Binding CanDeleteFormat, Mode=OneWay}" Text="Delete Selected" />
             </HorizontalStackLayout>
         </Grid>

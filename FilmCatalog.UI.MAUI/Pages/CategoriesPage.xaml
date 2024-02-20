@@ -25,7 +25,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <Grid Grid.Row="1" ColumnDefinitions="1*,1*">
-            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}">
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutWithHeightStyle}">
                 <Label Text="New:" Style="{StaticResource MediumBlueBoldLabelStyle}" VerticalOptions="Center" />
                 <Entry Text="{Binding CreateCategoryName, Mode=TwoWay}" Placeholder="category name" WidthRequest="200">
                     <Entry.Behaviors>
@@ -34,7 +34,7 @@
                 </Entry>
                 <Button Command="{Binding CreateCategoryCommand, Mode=OneWay}" IsEnabled="{Binding CanCreateCategory, Mode=OneWay}" Text="Create" />
             </HorizontalStackLayout>
-            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
+            <HorizontalStackLayout Style="{StaticResource HorizontalStackLayoutWithHeightStyle}" Grid.Column="1" HorizontalOptions="EndAndExpand">
                 <Button Command="{Binding DeleteCategoryCommand, Mode=OneWay}" IsEnabled="{Binding CanDeleteCategory, Mode=OneWay}" Text="Delete Selected" />
             </HorizontalStackLayout>
         </Grid>

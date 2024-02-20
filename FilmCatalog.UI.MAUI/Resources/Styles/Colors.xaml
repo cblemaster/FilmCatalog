@@ -17,7 +17,7 @@
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1F1F1F</Color>
 
-    <Color x:Key="LightPink">LightPink</Color>
+    <Color x:Key="LightPinkAccent">#FDDFF4</Color>
     <Color x:Key="AquaAccent">#DAF0EB</Color>
     <Color x:Key="LightYellowAccent">#FFFF99</Color>
 
