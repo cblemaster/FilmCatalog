@@ -11,7 +11,7 @@
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
     <Grid Style="{StaticResource ContainerGridStyle}" ColumnDefinitions="2*,8*">
-        <CollectionView ItemsSource="{Binding Filters, Mode=OneWay}" SelectedItem="{Binding SelectedFilter, Mode=OneWayToSource}"
+        <CollectionView ItemsSource="{Binding Filters, Mode=OneWay}" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}"
                         SelectionChangedCommand="{Binding SelectedFilterChangedCommand, Mode=OneWay}" VerticalOptions="CenterAndExpand">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />

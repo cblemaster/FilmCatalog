@@ -9,7 +9,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
 {
     public partial class FilmsPageModel : ObservableObject
     {
-        private ReadOnlyCollection<string> _filterOptions = new(new List<string>() { "All films" ,"Favorites", "Rare, collectible, and/or valuable", "Five star", "Films by actor", "Films by director", "Films by category", "Films by format"});
+        private readonly ReadOnlyCollection<string> _filterOptions = new(new List<string>() { "All films" ,"Favorites", "Rare, collectible, and/or valuable", "Five star", "Films by actor", "Films by director", "Films by category", "Films by format"});
                 
         private readonly IHttpService _httpService;
 
@@ -32,7 +32,11 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private string _selectedFilter = default!;
 
         [RelayCommand]
-        private void PageAppearing() => LoadDataAsync();
+        private void PageAppearing()
+        {
+            LoadDataAsync();
+            SelectedFilter = "All films";
+        }
 
         [RelayCommand]
         private async Task SelectedFilmChangedAsync() =>
