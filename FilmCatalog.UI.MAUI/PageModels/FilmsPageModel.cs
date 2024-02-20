@@ -9,8 +9,8 @@ namespace FilmCatalog.UI.MAUI.PageModels
 {
     public partial class FilmsPageModel : ObservableObject
     {
-        private readonly ReadOnlyCollection<string> _filterOptions = new(new List<string>() { "All films" ,"Favorites", "Rare, collectible, and/or valuable", "Five star", "Films by actor", "Films by director", "Films by category", "Films by format"});
-                
+        private readonly ReadOnlyCollection<string> _filterOptions = new(new List<string>() { "All films", "Favorites", "Rare, collectible, and/or valuable", "Five star", "Films by actor", "Films by director", "Films by category", "Films by format" });
+
         private readonly IHttpService _httpService;
 
         public FilmsPageModel(IHttpService httpService)

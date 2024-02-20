@@ -144,7 +144,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+    <Style TargetType="Entry" x:Key="InvalidEntryStyle">
         <Setter Property="TextColor" Value="{StaticResource Magenta}" />
         <Setter Property="BackgroundColor" Value="{StaticResource LightPink}" />
     </Style>
