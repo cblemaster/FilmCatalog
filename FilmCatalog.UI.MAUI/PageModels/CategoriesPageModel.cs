@@ -67,7 +67,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
 
             if (deleteConfirmed)
             {
-                await _httpService.DeleteActorAsync(SelectedCategory.CategoryId);
+                await _httpService.DeleteCategoryAsync(SelectedCategory.CategoryId);
                 await LoadDataAsync();
             }
         }
