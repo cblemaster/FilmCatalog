@@ -17,7 +17,7 @@ namespace FilmCatalog.UI.MAUI.Services
 
         public async void AssignActorsToFilmAsync(int filmId, ICollection<DisplayActor> actors)
         {
-            if (actors is null || !actors.Any() || filmId < 1) { return; }
+            if (actors is null || actors.Count == 0 || filmId < 1) { return; }
 
             StringContent content = new(JsonSerializer.Serialize(actors));
             content.Headers.ContentType = new("application/json");
@@ -32,7 +32,7 @@ namespace FilmCatalog.UI.MAUI.Services
 
         public async void AssignCategoriesToFilmAsync(int filmId, ICollection<DisplayCategory> categories)
         {
-            if (categories is null || !categories.Any() || filmId < 1) { return; }
+            if (categories is null || categories.Count == 0 || filmId < 1) { return; }
 
             StringContent content = new(JsonSerializer.Serialize(categories));
             content.Headers.ContentType = new("application/json");
@@ -463,7 +463,7 @@ namespace FilmCatalog.UI.MAUI.Services
 
         public async void RemoveActorsFromFilmAsync(int filmId, ICollection<DisplayActor> actors)
         {
-            if (actors is null || !actors.Any() || filmId < 1) { return; }
+            if (actors is null || actors.Count == 0 || filmId < 1) { return; }
 
             StringContent content = new(JsonSerializer.Serialize(actors));
             content.Headers.ContentType = new("application/json");
@@ -478,7 +478,7 @@ namespace FilmCatalog.UI.MAUI.Services
 
         public async void RemoveCategoriesFromFilmAsync(int filmId, ICollection<DisplayCategory> categories)
         {
-            if (categories is null || !categories.Any() || filmId < 1) { return; }
+            if (categories is null || categories.Count == 0 || filmId < 1) { return; }
 
             StringContent content = new(JsonSerializer.Serialize(categories));
             content.Headers.ContentType = new("application/json");
