@@ -352,81 +352,141 @@ namespace FilmCatalog.UI.MAUI.Services
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByActorAsync()
+        public async Task<ReadOnlyCollection<FilmGroup>> GetFilmsByActorAsync()
         {
-            //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError = Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, actorGroup) => actorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
-
             try
             {
                 HttpResponseMessage response = await _client.GetAsync("/film");
                 if (response.IsSuccessStatusCode && response.Content is not null)
                 {
-                    IEnumerable<DisplayFilm?> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable();
-                    return films.GroupBy(f => f?.Actors.Select(a => a.Name), (key, actorGroup) => actorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    List<FilmGroup> returnGroups = [];
+                    List<string> actorNames = [];
+
+                    IEnumerable<DisplayFilm> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList();
+
+                    foreach (DisplayFilm film in films)
+                    {
+                        foreach (DisplayActor actor in film.Actors)
+                        {
+                            if (!actorNames.Contains(actor.Name))
+                            {
+                                actorNames.Add(actor.Name);
+                            }
+                        }
+                    }
+                    
+                    foreach (string actor in actorNames)
+                    {
+                        FilmGroup group = new(actor, films.Where(f => f.Actors.Select(a => a.Name).Contains(actor)).ToList());
+                        returnGroups.Add(group);
+                    }
+
+                    returnGroups.Add(new("no actor specified.", films.Where(f => !f.Categories.Any()).ToList()));
+
+                    return returnGroups.OrderBy(g => g.Name).ToList().AsReadOnly();
                 }
                 else
                 {
-                    return Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, actorGroup) => actorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    return Enumerable.Empty<FilmGroup>().ToList().AsReadOnly();
                 }
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByCategoryAsync()
+        public async Task<ReadOnlyCollection<FilmGroup>> GetFilmsByCategoryAsync()
         {
-            //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError = Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, categoryGroup) => categoryGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
-
             try
             {
                 HttpResponseMessage response = await _client.GetAsync("/film");
                 if (response.IsSuccessStatusCode && response.Content is not null)
                 {
-                    IEnumerable<DisplayFilm?> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable();
-                    return films.GroupBy(f => f?.Categories.Select(c => c.CategoryName), (key, categoryGroup) => categoryGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    List<FilmGroup> returnGroups = [];
+                    List<string> categoryNames = [];
+
+                    IEnumerable<DisplayFilm> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList();
+
+                    foreach (DisplayFilm film in films)
+                    {
+                        foreach (DisplayCategory category in film.Categories)
+                        {
+                            if (!categoryNames.Contains(category.CategoryName))
+                            {
+                                categoryNames.Add(category.CategoryName);
+                            }
+                        }
+                    }
+                    
+                    foreach (string category in categoryNames)
+                    {
+                        FilmGroup group = new(category, films.Where(f => f.Categories.Select(a => a.CategoryName).Contains(category)).ToList());
+                        returnGroups.Add(group);
+                    }
+
+                    returnGroups.Add(new("no category specified.", films.Where(f => !f.Categories.Any()).ToList()));
+
+                    return returnGroups.OrderBy(g => g.Name).ToList().AsReadOnly();
                 }
                 else
                 {
-                    return Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, categoryGroup) => categoryGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    return Enumerable.Empty<FilmGroup>().ToList().AsReadOnly();
                 }
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByDirectorAsync()
+        public async Task<ReadOnlyCollection<FilmGroup>> GetFilmsByDirectorAsync()
         {
-            //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError =  Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, directorGroup) => directorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
-
             try
             {
                 HttpResponseMessage response = await _client.GetAsync("/film");
                 if (response.IsSuccessStatusCode && response.Content is not null)
                 {
-                    IEnumerable<DisplayFilm?> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable();
-                    return films.GroupBy(f => f?.Director is null ? "No director specified" : f.Director.Name, (key, directorGroup) => directorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    List<FilmGroup> returnGroups = [];
+
+                    IEnumerable<DisplayFilm> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList();
+
+                    IEnumerable<string> directors = films.Select(f => f.Director?.Name ?? "No director specified.").Distinct().ToList();
+                    foreach (string director in directors.Where(d => d != "No director specified."))
+                    {
+                        FilmGroup group = new(director, films.Where(f => f.Director?.Name == director).ToList());
+                        returnGroups.Add(group);
+                    }
+
+                    returnGroups.Add(new("no director specified.", films.Where(f => f.DirectorId is null).ToList()));
+
+                    return returnGroups.OrderBy(g => g.Name).ToList().AsReadOnly();
                 }
                 else
                 {
-                    return Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, directorGroup) => directorGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    return Enumerable.Empty<FilmGroup>().ToList().AsReadOnly();
                 }
             }
             catch (Exception) { throw; }
         }
 
-        public async Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByFormatAsync()
+        public async Task<ReadOnlyCollection<FilmGroup>> GetFilmsByFormatAsync()
         {
-            //ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>> returnThisOnError = Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, formatGroup) => formatGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
-
             try
             {
                 HttpResponseMessage response = await _client.GetAsync("/film");
                 if (response.IsSuccessStatusCode && response.Content is not null)
                 {
-                    IEnumerable<DisplayFilm?> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable();
-                    return films.GroupBy(f => f?.Format.FormatName, (key, formatGroup) => formatGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    List<FilmGroup> returnGroups = [];
+                    
+                    IEnumerable<DisplayFilm> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList();
+
+                    IEnumerable<string> formats = films.Select(f => f.Format.FormatName).Distinct().ToList();
+                    foreach (string format in formats)
+                    {
+                        FilmGroup group = new(format, films.Where(f => f.Format.FormatName == format).ToList());
+                        returnGroups.Add(group);
+                    }
+
+                    return returnGroups.OrderBy(g => g.Name).ToList().AsReadOnly();
                 }
                 else
                 {
-                    return Enumerable.GroupBy(Enumerable.Empty<DisplayFilm?>(), f => string.Empty, (key, formatGroup) => formatGroup.ToList().AsReadOnly()).ToList().AsReadOnly();
+                    return Enumerable.Empty<FilmGroup>().ToList().AsReadOnly();
                 }
             }
             catch (Exception) { throw; }

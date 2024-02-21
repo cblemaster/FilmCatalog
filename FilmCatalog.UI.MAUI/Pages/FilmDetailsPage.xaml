@@ -6,7 +6,7 @@
              xmlns:models="clr-namespace:FilmCatalog.UI.MAUI.Models"
              x:Class="FilmCatalog.UI.MAUI.Pages.FilmDetailsPage"
              x:DataType="{x:Type pageModels:FilmDetailsPageModel}"
-             Title="FilmDetailsPage">
+             Title="Film Details Page">
     <ContentPage.Resources>
         <toolkit:BoolToObjectConverter x:Key="ConvertBoolToObj" FalseObject="No" TrueObject="Yes" />
     </ContentPage.Resources>

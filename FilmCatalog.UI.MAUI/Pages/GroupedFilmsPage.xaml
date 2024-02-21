@@ -4,15 +4,15 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:pageModels="clr-namespace:FilmCatalog.UI.MAUI.PageModels"
              xmlns:models="clr-namespace:FilmCatalog.UI.MAUI.Models"
-             x:Class="FilmCatalog.UI.MAUI.Pages.FilmsPage"
-             x:DataType="{x:Type pageModels:FilmsPageModel}"
-             Title="Films Page">
+             x:Class="FilmCatalog.UI.MAUI.Pages.GroupedFilmsPage"
+             x:DataType="{x:Type pageModels:GroupedFilmsPageModel}"
+             Title="Grouped Films Page">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
     <Grid Style="{StaticResource ContainerGridStyle}" ColumnDefinitions="2*,8*">
         <CollectionView ItemsSource="{Binding Filters, Mode=OneWay}" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}"
-                        SelectionChangedCommand="{Binding SelectedFilterChangedCommand, Mode=OneWay}" VerticalOptions="CenterAndExpand">
+                    SelectionChangedCommand="{Binding SelectedFilterChangedCommand, Mode=OneWay}" VerticalOptions="CenterAndExpand">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
             </CollectionView.ItemsLayout>
@@ -23,7 +23,12 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
         <CollectionView ItemsSource="{Binding Films, Mode=OneWay}" SelectedItem="{Binding SelectedFilm, Mode=OneWayToSource}" 
-                    SelectionChangedCommand="{Binding SelectedFilmChangedCommand, Mode=OneWay}" Grid.Column="1" EmptyView="No films found.">
+                SelectionChangedCommand="{Binding SelectedFilmChangedCommand, Mode=OneWay}" IsGrouped="True" Grid.Column="1" EmptyView="No films found.">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="{x:Type models:FilmGroup}">
+                    <Label FontSize="20" Text="{Binding Name}" TextColor="{StaticResource SecondaryDarkText}" FontAttributes="Bold" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="5" />
             </CollectionView.ItemsLayout>
@@ -40,6 +45,11 @@
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.GroupFooterTemplate>
+                <DataTemplate x:DataType="{x:Type models:FilmGroup}">
+                    <Label Text="{Binding Count, StringFormat='Total films: {0:D}'}" />
+                </DataTemplate>
+            </CollectionView.GroupFooterTemplate>
         </CollectionView>
     </Grid>
 </ContentPage>

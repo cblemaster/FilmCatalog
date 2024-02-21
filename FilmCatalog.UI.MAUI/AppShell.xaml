@@ -8,6 +8,7 @@
     Title="Film Catalog">
     <TabBar>
         <ShellContent Title="Films" ContentTemplate="{DataTemplate pages:FilmsPage}" Route="Films" />
+        <ShellContent Title="Grouped Films" ContentTemplate="{DataTemplate pages:GroupedFilmsPage}" Route="GroupedFilms" />
         <ShellContent Title="Actors" ContentTemplate="{DataTemplate pages:ActorsPage}" Route="Actors" />
         <ShellContent Title="Categories" ContentTemplate="{DataTemplate pages:CategoriesPage}" Route="Categories" />
         <ShellContent Title="Directors" ContentTemplate="{DataTemplate pages:DirectorsPage}" Route="Directors" />

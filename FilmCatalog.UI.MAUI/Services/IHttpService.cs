@@ -28,10 +28,10 @@ namespace FilmCatalog.UI.MAUI.Services
         Task<ReadOnlyCollection<DisplayFilm>> GetFavoriteFilmsAsync();
         Task<ReadOnlyCollection<DisplayFilm>> GetRareFilmsAsync();
         Task<ReadOnlyCollection<DisplayFilm>> GetFivestarFilmsAsync();
-        Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByActorAsync();
-        Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByCategoryAsync();
-        Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByDirectorAsync();
-        Task<ReadOnlyCollection<ReadOnlyCollection<DisplayFilm?>>> GetFilmsByFormatAsync();
+        Task<ReadOnlyCollection<FilmGroup>> GetFilmsByActorAsync();
+        Task<ReadOnlyCollection<FilmGroup>> GetFilmsByCategoryAsync();
+        Task<ReadOnlyCollection<FilmGroup>> GetFilmsByDirectorAsync();
+        Task<ReadOnlyCollection<FilmGroup>> GetFilmsByFormatAsync();
         Task<DisplayFormat> GetFormatAsync(int formatId);
         Task<ReadOnlyCollection<DisplayFormat>> GetFormatsAsync();
         void RemoveActorsFromFilmAsync(int filmId, ICollection<DisplayActor> actors);
