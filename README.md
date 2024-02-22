@@ -15,6 +15,7 @@
 	- Nullable reference types
 	- Asynchronous programming
 	- Dependency injection
+	- MVVM pattern
 
 ## Features:
 - Actors: Create, Rename, Delete*, View, View all
