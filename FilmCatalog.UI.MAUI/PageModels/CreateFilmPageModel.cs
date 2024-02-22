@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FilmCatalog.UI.MAUI.Models;
-using FilmCatalog.UI.MAUI.Pages;
 using FilmCatalog.UI.MAUI.Services;
 
 namespace FilmCatalog.UI.MAUI.PageModels
@@ -55,13 +54,13 @@ namespace FilmCatalog.UI.MAUI.PageModels
             CreateFilm.CreateDate = DateTime.Now;
             CreateFilm.DirectorId = SelectedDirector?.DirectorId ?? null;
             CreateFilm.FormatId = SelectedFormat.FormatId;
-            
+
             if (!CanCreateActor || !CreateFilm.Validate().IsValid)
             {
                 return;
             }
 
-            if (await _httpService.CreateFilmAsync(CreateFilm) is DisplayFilm newFilm)
+            if (await _httpService.CreateFilmAsync(CreateFilm) is DisplayFilm)
             {
                 await Shell.Current.GoToAsync("//Films");
             }
@@ -73,7 +72,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
 
         private async Task LoadDirectorsAsync()
         {
-            var directors = (await _httpService.GetDirectorsAsync()).OrderBy(f => f.Name).ToList();
+            List<DisplayDirector> directors = (await _httpService.GetDirectorsAsync()).OrderBy(f => f.Name).ToList();
             directors.Insert(0, new() { DirectorId = 0, Name = "none" });
 
             Directors = directors.AsReadOnly();

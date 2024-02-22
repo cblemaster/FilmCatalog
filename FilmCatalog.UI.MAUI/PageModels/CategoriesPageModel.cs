@@ -29,10 +29,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private async Task PageAppearingAsync() => await LoadDataAsync();
 
         [RelayCommand]
-        private void SelectedCategoryChanged()
-        {
-            CanDeleteCategory = true;
-        }
+        private void SelectedCategoryChanged() => CanDeleteCategory = true;
 
         [RelayCommand]
         private async Task CreateCategoryAsync()

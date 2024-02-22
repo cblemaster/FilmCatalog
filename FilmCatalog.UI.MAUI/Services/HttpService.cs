@@ -374,7 +374,7 @@ namespace FilmCatalog.UI.MAUI.Services
                             }
                         }
                     }
-                    
+
                     foreach (string actor in actorNames)
                     {
                         FilmGroup group = new(actor, films.Where(f => f.Actors.Select(a => a.Name).Contains(actor)).ToList());
@@ -415,7 +415,7 @@ namespace FilmCatalog.UI.MAUI.Services
                             }
                         }
                     }
-                    
+
                     foreach (string category in categoryNames)
                     {
                         FilmGroup group = new(category, films.Where(f => f.Categories.Select(a => a.CategoryName).Contains(category)).ToList());
@@ -472,7 +472,7 @@ namespace FilmCatalog.UI.MAUI.Services
                 if (response.IsSuccessStatusCode && response.Content is not null)
                 {
                     List<FilmGroup> returnGroups = [];
-                    
+
                     IEnumerable<DisplayFilm> films = response.Content.ReadFromJsonAsAsyncEnumerable<DisplayFilm>().ToBlockingEnumerable().ToList();
 
                     IEnumerable<string> formats = films.Select(f => f.Format.FormatName).Distinct().ToList();

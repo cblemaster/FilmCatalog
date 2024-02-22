@@ -4,10 +4,10 @@ namespace FilmCatalog.UI.MAUI.Pages;
 
 public partial class GroupedFilmsPage : ContentPage
 {
-	public GroupedFilmsPage(GroupedFilmsPageModel pageModel)
-	{
-		InitializeComponent();
+    public GroupedFilmsPage(GroupedFilmsPageModel pageModel)
+    {
+        InitializeComponent();
 
         BindingContext = pageModel;
-	}
+    }
 }
