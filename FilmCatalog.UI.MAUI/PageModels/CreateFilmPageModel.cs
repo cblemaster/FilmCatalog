@@ -35,7 +35,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
         private bool _canClosePage = true;
 
         [ObservableProperty]
-        private bool _canCreateActor = true;
+        private bool _canCreateFilm = true;
 
         [RelayCommand]
         private async Task ClosePageAsync()
@@ -51,12 +51,23 @@ namespace FilmCatalog.UI.MAUI.PageModels
         [RelayCommand]
         private async Task CreateFilmAsync()
         {
+            if (!CanCreateFilm) { return; }
+
+            if (SelectedFormat is null)
+            {
+                await Shell.Current.DisplayAlert("Error!", "Select a format.", "OK");
+                return;
+            }
+
             CreateFilm.CreateDate = DateTime.Now;
             CreateFilm.DirectorId = SelectedDirector?.DirectorId ?? null;
             CreateFilm.FormatId = SelectedFormat.FormatId;
 
-            if (!CanCreateActor || !CreateFilm.Validate().IsValid)
+            (bool IsValid, string ErrorMessage) = CreateFilm.Validate();
+            
+            if (!IsValid)
             {
+                await Shell.Current.DisplayAlert("Error!", ErrorMessage, "OK");
                 return;
             }
 
