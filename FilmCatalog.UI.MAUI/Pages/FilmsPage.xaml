@@ -10,7 +10,7 @@
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding PageAppearingCommand, Mode=OneWay}" />
     </ContentPage.Behaviors>
-    <Grid Style="{StaticResource ContainerGridStyle}" ColumnDefinitions="2*,8*">
+    <Grid Style="{StaticResource ContainerGridStyle}" ColumnDefinitions="2*,8*" RowDefinitions="85*,15*">
         <CollectionView ItemsSource="{Binding Filters, Mode=OneWay}" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}"
                         SelectionChangedCommand="{Binding SelectedFilterChangedCommand, Mode=OneWay}" VerticalOptions="CenterAndExpand">
             <CollectionView.ItemsLayout>
@@ -41,5 +41,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        <Button Command="{Binding NavToCreateFilmCommand, Mode=OneWay}" Text="Create" Grid.Row="1" HeightRequest="45" />
     </Grid>
 </ContentPage>

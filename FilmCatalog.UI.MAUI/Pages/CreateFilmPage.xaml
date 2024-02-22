@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:pageModels="clr-namespace:FilmCatalog.UI.MAUI.PageModels"
+             xmlns:models="clr-namespace:FilmCatalog.UI.MAUI.Models"
+             x:Class="FilmCatalog.UI.MAUI.Pages.CreateFilmPage"
+             x:DataType="{x:Type pageModels:CreateFilmPageModel}"
+             Title="Create Film Page">
+    <Grid Style="{StaticResource ContainerGridStyle}" ColumnDefinitions="2*,2*,1*" RowDefinitions="1*,1*,1*,1*,1*,1*">
+        <Entry Text="{Binding CreateFilm.Title, Mode=TwoWay}" Placeholder="Title" Grid.ColumnSpan="3">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="1" />
+            </Entry.Behaviors>
+        </Entry>
+        <Entry Text="{Binding CreateFilm.Description, Mode=TwoWay}" Placeholder="Description" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,0,0,15">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="0" />
+            </Entry.Behaviors>
+        </Entry>
+        <Picker ItemsSource="{Binding Directors, Mode=OneWay}" ItemDisplayBinding="{Binding Name, Mode=OneWay}" SelectedItem="{Binding SelectedDirector, Mode=OneWayToSource}" Grid.Row="2" Title="Director" Margin="0,0,0,15" />
+        <Entry Text="{Binding CreateFilm.Year, Mode=TwoWay}" Placeholder="Year" Grid.Row="3" Margin="0,0,0,15">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="4" MinimumLength="0" />
+            </Entry.Behaviors>
+        </Entry>
+        <Entry Text="{Binding CreateFilm.Studio, Mode=TwoWay}" Placeholder="Studio" Grid.Row="4" Margin="0,0,0,15">
+            <Entry.Behaviors>
+                <toolkit:TextValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumLength="255" MinimumLength="0" />
+            </Entry.Behaviors>
+        </Entry>
+        <Entry Text="{Binding CreateFilm.Quantity, Mode=TwoWay}" Placeholder="Quantity" Grid.Row="5" Margin="0,0,0,15">
+            <Entry.Behaviors>
+                <toolkit:NumericValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumDecimalPlaces="0" />
+            </Entry.Behaviors>
+        </Entry>
+        <Picker ItemsSource="{Binding Formats, Mode=OneWay}" ItemDisplayBinding="{Binding FormatName, Mode=OneWay}" SelectedItem="{Binding SelectedFormat, Mode=OneWayToSource}" Title="Format" Grid.Row="2" Grid.Column="1" Margin="15,0,0,15" />
+        <Entry Text="{Binding CreateFilm.StarRating, Mode=TwoWay}" Placeholder="Star rating" Grid.Row="3" Grid.Column="1" Margin="15,0,0,15">
+            <Entry.Behaviors>
+                <toolkit:NumericValidationBehavior InvalidStyle="{StaticResource InvalidEntryStyle}" Flags="ValidateOnValueChanged" MaximumDecimalPlaces="0" MinimumValue="1" MaximumValue="5" />
+            </Entry.Behaviors>
+        </Entry>
+        <HorizontalStackLayout Grid.Row="4" Grid.Column="1" Spacing="10" Margin="15,0,0,15">
+            <Label Text="Favorite?" Style="{StaticResource SmallBlueLabelStyleForDetails}" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding CreateFilm.IsFavorite, Mode=TwoWay}" />
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="5" Grid.Column="1" Spacing="10" Margin="15,0,0,15">
+            <Label Text="Rare, collectible, or valuable?" Style="{StaticResource SmallBlueLabelStyleForDetails}" VerticalOptions="Center" />
+            <Switch IsToggled="{Binding CreateFilm.IsRareCollectibleAndOrValuable, Mode=TwoWay}" />
+        </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Column="2" Grid.Row="2" Grid.RowSpan="4" Spacing="5">
+            <Button Command="{Binding ClosePageCommand, Mode=OneWay}" IsEnabled="{Binding CanClosePage, Mode=OneWay}" Text="Close" />
+            <Button Command="{Binding CreateFilmCommand, Mode=OneWay}" IsEnabled="{Binding CanCreateActor, Mode=OneWay}" Text="Create" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

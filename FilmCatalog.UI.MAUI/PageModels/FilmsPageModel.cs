@@ -31,6 +31,9 @@ namespace FilmCatalog.UI.MAUI.PageModels
         [ObservableProperty]
         private string _selectedFilter = default!;
 
+        [ObservableProperty]
+        private bool _canNavToCreateFilm = true;
+
         [RelayCommand]
         private void PageAppearing()
         {
@@ -62,6 +65,16 @@ namespace FilmCatalog.UI.MAUI.PageModels
                 default:
                     break;
             }
+        }
+
+        [RelayCommand]
+        private async Task NavToCreateFilmAsync()
+        {
+            if (!CanNavToCreateFilm)
+            {
+                return;
+            }
+            await Shell.Current.Navigation.PushModalAsync(new CreateFilmPage());
         }
 
         private async Task LoadDataAsync() => Films = await _httpService.GetFilmsAsync();

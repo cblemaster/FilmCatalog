@@ -68,7 +68,6 @@
         </HorizontalStackLayout>
         <VerticalStackLayout Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Spacing="5">
             <Button Command="{Binding ClosePageCommand, Mode=OneWay}" Text="Close" />
-            <Button Command="{Binding NavToCreateFilmCommand, Mode=OneWay}" Text="Create" />
             <Button Command="{Binding NavToUpdateFilmCommand, Mode=OneWay}" Text="Update" />
             <Button Command="{Binding DeleteFilmCommand, Mode=OneWay}" Text="Delete" />
         </VerticalStackLayout>

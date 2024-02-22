@@ -35,6 +35,7 @@ namespace FilmCatalog.UI.MAUI
                     .AddTransient<FormatsPage>()
                     .AddTransient<GroupedFilmsPageModel>()
                     .AddTransient<GroupedFilmsPage>()
+                    .AddTransient<CreateFilmPageModel>()
                     ;
 
 #if DEBUG

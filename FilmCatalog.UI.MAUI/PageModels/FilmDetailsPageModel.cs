@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FilmCatalog.UI.MAUI.Models;
+using FilmCatalog.UI.MAUI.Pages;
 using FilmCatalog.UI.MAUI.Services;
 
 namespace FilmCatalog.UI.MAUI.PageModels
@@ -14,9 +15,6 @@ namespace FilmCatalog.UI.MAUI.PageModels
 
         [ObservableProperty]
         private bool _canClosePage = true;
-
-        [ObservableProperty]
-        private bool _canNavToCreateFilm = true;
 
         [ObservableProperty]
         private bool _canNavToUpdateFilm = true;
@@ -33,16 +31,7 @@ namespace FilmCatalog.UI.MAUI.PageModels
             }
 
             await Shell.Current.Navigation.PopModalAsync();
-        }
-
-        [RelayCommand]
-        private async Task NavToCreateFilmAsync()
-        {
-            if (!CanNavToCreateFilm)
-            {
-                return;
-            }
-        }
+        }        
 
         [RelayCommand]
         private async Task NavToUpdateFilmAsync()

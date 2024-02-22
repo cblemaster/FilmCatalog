@@ -4,17 +4,17 @@ namespace FilmCatalog.UI.MAUI.Models
 {
     public class CreateFilm
     {
-        public required string Title { get; init; }
-        public string? Description { get; init; }
-        public int? DirectorId { get; init; }
-        public required int FormatId { get; init; }
-        public required int Quantity { get; init; }
-        public string? Year { get; init; }
-        public string? Studio { get; init; }
-        public int? StarRating { get; init; }
-        public required bool IsFavorite { get; init; }
-        public required bool IsRareCollectibleAndOrValuable { get; init; }
-        public required DateTime CreateDate { get; init; }
+        public string Title { get; set; } = default!;
+        public string? Description { get; set; }
+        public int? DirectorId { get; set; }
+        public int FormatId { get; set; }
+        public int Quantity { get; set; }
+        public string? Year { get; set; }
+        public string? Studio { get; set; }
+        public int? StarRating { get; set; }
+        public bool IsFavorite { get; set; }
+        public bool IsRareCollectibleAndOrValuable { get; set; }
+        public DateTime CreateDate { get; set; }
 
         public (bool IsValid, string ErrorMessage) Validate()
         {
@@ -32,7 +32,7 @@ namespace FilmCatalog.UI.MAUI.Models
             {
                 AppendToStringBuilder("Invalid format id for film.");
             }
-            if (DirectorId < 1)
+            if (DirectorId is not null && DirectorId < 1)
             {
                 AppendToStringBuilder("Invalid director id for film.");
             }
